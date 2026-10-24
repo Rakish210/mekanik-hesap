@@ -8,6 +8,8 @@ katsayilar ile TEYIT EDILMEDEN belgelendirmede kullanilmaz.
 Standart uydurulmaz.
 """
 
+from typing import Optional, Union
+
 # yakit -> (cevrim_katsayi, kgCO2/kWh) pratik [STANDART-TEYIT].
 YAKIT_KATSAYI = {
     "elektrik": (2.36, 0.44),
@@ -20,12 +22,14 @@ YAKIT_KATSAYI = {
 }
 
 
-def yakitlar():
+def yakitlar() -> list[str]:
     """Kayitli yakit adlari listesi."""
     return sorted(YAKIT_KATSAYI)
 
 
-def birincil_enerji(tuketim_kwh, yakit="dogalgaz", cevrim=None):
+def birincil_enerji(tuketim_kwh: Union[int, float],
+                    yakit: str = "dogalgaz",
+                    cevrim: Optional[Union[int, float]] = None) -> float:
     """Birincil enerji, kWh. tuketim * cevrim_katsayi.
 
     cevrim verilirse tablo yerine kullanilir.
@@ -45,7 +49,9 @@ def birincil_enerji(tuketim_kwh, yakit="dogalgaz", cevrim=None):
     return t * k
 
 
-def karbon_emisyon(tuketim_kwh, yakit="dogalgaz", faktor=None):
+def karbon_emisyon(tuketim_kwh: Union[int, float],
+                   yakit: str = "dogalgaz",
+                   faktor: Optional[Union[int, float]] = None) -> float:
     """Karbon emisyonu, kgCO2. tuketim_kWh * faktor."""
     t = float(tuketim_kwh)
     if t < 0:
@@ -62,7 +68,7 @@ def karbon_emisyon(tuketim_kwh, yakit="dogalgaz", faktor=None):
     return t * f
 
 
-def toplam_emisyon(kalemler_kwh):
+def toplam_emisyon(kalemler_kwh: list[tuple[str, Union[int, float]]]) -> float:
     """Yakit kalemleri [(yakit, kwh)] -> toplam kgCO2."""
     toplam = 0.0
     for yakit, kwh in kalemler_kwh:
@@ -70,7 +76,8 @@ def toplam_emisyon(kalemler_kwh):
     return toplam
 
 
-def birim_alan_gosterge(deger, alan_m2):
+def birim_alan_gosterge(deger: Union[int, float],
+                        alan_m2: Union[int, float]) -> float:
     """m2 basina gosterge: deger / alan (kWh/m2 veya kgCO2/m2)."""
     d, a = float(deger), float(alan_m2)
     if d < 0 or a <= 0:
