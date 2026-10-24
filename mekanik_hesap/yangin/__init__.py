@@ -5,7 +5,7 @@ TS EN 14384 (hidrant), TS EN 15004 (gazli sondurme),
 BYKHY m.95 (hidrant alani). Hidrolik kayip Hazen-Williams ile
 hesaplanir; su tesisatindaki mevcut yaklasimla (colebrook/water)
 tutarli olmasi icin C katsayisi ve pratik kabuller ayrica
-isaretlidir. Katsayisi bilinmeyen basliga [STANDART-TEYIT]
+isaretlidir. Katsayisi bilinmeyen basliga [STANDART-TEYIT: TS EN 12845, TS EN 671]
 yazilir, standart uydurulmaz.
 """
 
@@ -55,7 +55,7 @@ def sprinkler_zon(zon_alani_m2: Union[int, float],
 
     Debi = alan * tasarim yogunlugu; sprinkler sayisi debi / tekil
     debiye yuvarlanir. Yogunluk ve tehlike sinifi secimi projeye
-    aittir [STANDART-TEYIT]; TS EN 12845 tablo degerleri teyit edilir.
+    aittir [STANDART-TEYIT: TS EN 12845, TS EN 671]; TS EN 12845 tablo degerleri teyit edilir.
     """
     alan = float(zon_alani_m2)
     yog = float(yogunluk_mm_dk)
@@ -71,7 +71,7 @@ def dolap_debi(dolap_adet: int, birim_debi_ldk: float = 100.0,
     """Yangin dolabi debisi, L/dk. TS EN 671 esasli pratik.
 
     Birim debi ve es zamanli dolap sayisi pratik kabul
-    [STANDART-TEYIT]; hortum boyu TS EN 671-1 (20/25/30 m) projede
+    [STANDART-TEYIT: TS EN 12845, TS EN 671]; hortum boyu TS EN 671-1 (20/25/30 m) projede
     secilir.
     """
     adet = int(dolap_adet)
@@ -90,7 +90,7 @@ def hidrant_hatti(hidrant_adet: int,
     """Hidrant hatti: (toplam_debi_Ldk, pompa_basinci_mSS).
 
     Birim debi ve artik basinc BYKHY m.95 esasli pratik kabul
-    [STANDART-TEYIT]; kayip Hazen-Williams ile bulunur.
+    [STANDART-TEYIT: TS EN 12845, TS EN 671]; kayip Hazen-Williams ile bulunur.
     """
     adet = int(hidrant_adet)
     if adet <= 0 or float(birim_debi_ldk) <= 0:
@@ -108,7 +108,7 @@ def pompa_secimi(debi_m3h: Union[int, float],
     """Yangin pompasi: (ana_debi_m3h, ana_basinc_mSS, jokey_debi_m3h).
 
     Ana pompa debi+basinci aynen; jokey pompa ~%1 debi, ayni basinc
-    pratik kabul [STANDART-TEYIT]. Elektrik/dizel/jokey secimi
+    pratik kabul [STANDART-TEYIT: TS EN 12845, TS EN 671]. Elektrik/dizel/jokey secimi
     projeye aittir.
     """
     debi, basinc = float(debi_m3h), float(basinc_mss)
@@ -122,7 +122,7 @@ def su_deposu(debi_m3h: Union[int, float],
               sure_dk: float = 60.0) -> float:
     """Yangin su deposu (rezerv) hacmi, m3. V = Q*t.
 
-    Sure kabulu projeye/BYKHY'a gore secilir [STANDART-TEYIT].
+    Sure kabulu projeye/BYKHY'a gore secilir [STANDART-TEYIT: TS EN 12845, TS EN 671].
     """
     debi, sure = float(debi_m3h), float(sure_dk)
     if debi <= 0 or sure <= 0:
@@ -137,7 +137,7 @@ def _gazli_miktar(hacim_m3: Union[int, float],
 
     W = V*C / (S*(100-C)). Konsantrasyon ve ozgul hacim
     gaz tipine gore TS EN 15004 ilgili bolumunden secilir
-    [STANDART-TEYIT].
+    [STANDART-TEYIT: TS EN 12845, TS EN 671].
     """
     v = float(hacim_m3)
     c = float(konsantrasyon)
@@ -155,7 +155,7 @@ def fm200(hacim_m3: Union[int, float],
     """FM200 (HFC-227ea) miktari: (kg, nozul_adet). TS EN 15004-5.
 
     Konsantrasyon ve nozul kapsama alani proje/CPD degeridir
-    [STANDART-TEYIT]; alan verilmezse nozul 1 doner.
+    [STANDART-TEYIT: TS EN 12845, TS EN 671]; alan verilmezse nozul 1 doner.
     """
     miktar = _gazli_miktar(hacim_m3, konsantrasyon, ozgul_hacim)
     alan = float(alan_m2)
@@ -169,7 +169,7 @@ def fm200(hacim_m3: Union[int, float],
 def co2_miktar(hacim_m3: Union[int, float],
                faktor_kg_m3: float = 1.2) -> float:
     """CO2 sondurme miktari, kg. Toplam basma pratik faktor
-    [STANDART-TEYIT]; yuksek/alcak basinc secimi projeye aittir."""
+    [STANDART-TEYIT: TS EN 12845, TS EN 671]; yuksek/alcak basinc secimi projeye aittir."""
     v, f = float(hacim_m3), float(faktor_kg_m3)
     if v <= 0 or f <= 0:
         raise ValueError("hacim ve faktor pozitif olmali")
@@ -181,7 +181,7 @@ def novec1230(hacim_m3: Union[int, float],
               ozgul_hacim: float = 0.0733) -> float:
     """Novec 1230 (FK-5-1-12) miktari, kg. TS EN 15004-2.
 
-    Konsantrasyon proje/CPD degeridir [STANDART-TEYIT].
+    Konsantrasyon proje/CPD degeridir [STANDART-TEYIT: TS EN 12845, TS EN 671].
     """
     return _gazli_miktar(hacim_m3, konsantrasyon, ozgul_hacim)
 
@@ -193,7 +193,7 @@ def kopuk_konsantresi(alan_m2: Union[int, float],
     """Kopuk konsantresi miktari, L. V = A*q*t*oran.
 
     Uygulama yogunlugu, sure ve karisim orani tehlike sinifina gore
-    secilir [STANDART-TEYIT].
+    secilir [STANDART-TEYIT: TS EN 12845, TS EN 671].
     """
     alan = float(alan_m2)
     q = float(uygulama_ldk_m2)

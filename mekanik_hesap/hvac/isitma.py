@@ -3,7 +3,7 @@
 Dayanak: TS EN 12831 (isitma yuku), TS 825 (yalitim),
 TS 2164 (kalorifer tesisati esaslari), TS EN 1264 (yerden isitma),
 TS EN 12828 (kapali isitma sistemleri). Pratik/ampirik bagintilar
-ayrica isaretlidir; katsayisi bilinmeyen basliga [STANDART-TEYIT]
+ayrica isaretlidir; katsayisi bilinmeyen basliga [STANDART-TEYIT: TS EN 12831, TS 2164]
 yazilir, standart uydurulmaz.
 """
 
@@ -121,7 +121,7 @@ def baca_cekisi(yukseklik_m: Union[int, float],
                 t_baca_c: Union[int, float]) -> float:
     """Baca cekisi (tabii cekis), Pa. Fizik: dP = H*g*(rho_dis-rho_baca).
 
-    [STANDART-TEYIT]: baca kesit tayini pratik katsayilari icin.
+    [STANDART-TEYIT: TS EN 12831, TS 2164]: baca kesit tayini pratik katsayilari icin.
     """
     h = float(yukseklik_m)
     if h <= 0:
@@ -146,7 +146,7 @@ def uc_yollu_kvs(debi_m3h: Union[int, float],
     """Uc yollu vana Kvs, m3/h. Pratik: Kvs = V/kok(dp), otorite >= 0.25.
 
     Donus: (kvs, otorite_ok). Otorite kontrolu icin vana dp / devre dp
-    orani disaridan verilir; burada alt sinir notu duser [STANDART-TEYIT].
+    orani disaridan verilir; burada alt sinir notu duser [STANDART-TEYIT: TS EN 12831, TS 2164].
     """
     kvs = balans_kv(debi_m3h, dp_bar)
     return kvs, float(otorite_min) >= 0.25

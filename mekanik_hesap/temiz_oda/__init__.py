@@ -2,17 +2,17 @@
 
 Dayanak: ISO 14644-1 (siniflandirma), ISO 14644-2 (izleme),
 ISO 14644-4 (tasarim). ACH tablosu, basinc kademesi, HEPA birim
-debisi ve ic yuk kabulleri pratik olup [STANDART-TEYIT] ile
+debisi ve ic yuk kabulleri pratik olup [STANDART-TEYIT: ISO 14644-1/2/4] ile
 isaretlidir; GMP/urun sinifi gereksinimi projede teyit edilir.
 MACO (izin verilen azami tasima) temizlik validasyonu bagintisidir;
-guvenlik faktoru urune gore secilir [STANDART-TEYIT].
+guvenlik faktoru urune gore secilir [STANDART-TEYIT: ISO 14644-1/2/4].
 """
 
 import math
 from typing import Optional, Union
 
 # Sinifa gore tipik hava degisim sayisi, 1/h.
-# Pratik aralik [STANDART-TEYIT]; ISO 14644 sinif + geri kazanim
+# Pratik aralik [STANDART-TEYIT: ISO 14644-1/2/4]; ISO 14644 sinif + geri kazanim
 # suresine gore teyit edilir.
 ACH_TABLOSU = {
     "ISO5": 300.0,
@@ -37,7 +37,7 @@ def ach_debi(hacim_m3: Union[int, float],
 def sinif_debisi(hacim_m3: Union[int, float],
                  iso_sinif: str = "ISO7") -> float:
     """Sinifa gore besleme debisi, m3/h. ACH tablosu pratik
-    [STANDART-TEYIT]."""
+    [STANDART-TEYIT: ISO 14644-1/2/4]."""
     if iso_sinif not in ACH_TABLOSU:
         raise ValueError("iso_sinif ISO5/ISO6/ISO7/ISO8 olmali")
     return ach_debi(hacim_m3, ACH_TABLOSU[iso_sinif])
@@ -74,7 +74,7 @@ def basinc_kacak_debi(aciklik_m2: Union[int, float],
     """Fark basincta kacis debisi, m3/h. Q = Cd*A*kok(2 dp/rho).
 
     Basinc kademesi (or. 10-15 Pa) ve Cd pratik kabul
-    [STANDART-TEYIT]; kapi/derz sizdirmazligina gore teyit edilir.
+    [STANDART-TEYIT: ISO 14644-1/2/4]; kapi/derz sizdirmazligina gore teyit edilir.
     """
     a, dp = float(aciklik_m2), float(dp_pa)
     if a <= 0 or dp <= 0 or float(rho) <= 0:
@@ -87,7 +87,7 @@ def hepa_sayisi(debi_m3h: Union[int, float],
                 birim_m3h: float = 1000.0) -> int:
     """HEPA filtre adedi. Adet = tavan(debi/birim).
 
-    Birim kapasite katalog degeridir [STANDART-TEYIT].
+    Birim kapasite katalog degeridir [STANDART-TEYIT: ISO 14644-1/2/4].
     """
     debi, birim = float(debi_m3h), float(birim_m3h)
     if debi <= 0 or birim <= 0:
@@ -102,7 +102,7 @@ def isi_nem_yuku(debi_m3h: Union[int, float],
 
     Duyulur = rho*cp*Q*dT/3600; gizli = rho*Q*dn*h_fg/3600,
     h_fg = 2500 kJ/kg. dT ve nem farki proje kabuludur
-    [STANDART-TEYIT].
+    [STANDART-TEYIT: ISO 14644-1/2/4].
     """
     debi = float(debi_m3h)
     dt, dn = float(dt_k), float(dn_g_kg)
@@ -123,7 +123,7 @@ def maco(onceki_gunluk_doz_mg: Union[int, float],
 
     TDD: gunluk terapotik doz; MBS: sonraki parti buyuklugu (kg);
     SF: guvenlik faktoru (oral 1000 pratik). Doz ve SF urune gore
-    secilir [STANDART-TEYIT]; validasyon protokolunde teyit edilir.
+    secilir [STANDART-TEYIT: ISO 14644-1/2/4]; validasyon protokolunde teyit edilir.
     """
     tdda = float(onceki_gunluk_doz_mg)
     tddb = float(sonraki_gunluk_doz_mg)

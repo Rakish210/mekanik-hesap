@@ -1,13 +1,13 @@
 """Gurultu ve NC karsilastirmasi (KATALOG.md Ek, 4. hesap).
 
-Fan ses gucu ampirik kestirimdir [STANDART-TEYIT]; uretici
-oktaiv bant verisi esastir. NC hedefleri pratik [STANDART-TEYIT].
+Fan ses gucu ampirik kestirimdir [STANDART-TEYIT: TS ISO 3744, ASHRAE Handbook]; uretici
+oktaiv bant verisi esastir. NC hedefleri pratik [STANDART-TEYIT: TS ISO 3744, ASHRAE Handbook].
 """
 
 import math
 from typing import Union
 
-# Mahal turu -> hedef NC [STANDART-TEYIT]
+# Mahal turu -> hedef NC [STANDART-TEYIT: TS ISO 3744, ASHRAE Handbook]
 NC_HEDEF = {
     "yatak_odasi": 30, "hastane": 30, "konut": 30, "ofis": 35,
     "sinif": 35, "toplanti": 35, "lokanta": 40, "avm": 40,
@@ -20,7 +20,7 @@ def fan_guc_duzeyi(debi_m3h: Union[int, float],
     """Fan ses guc duzeyi kestirimi, dBA.
 
     LwA = 10*log10(Q) + 20*log10(P) - 8 (Q: m3/h, P: Pa).
-    Ampirik [STANDART-TEYIT]; ayni sinif fanlar icin kiyaslama.
+    Ampirik [STANDART-TEYIT: TS ISO 3744, ASHRAE Handbook]; ayni sinif fanlar icin kiyaslama.
     """
     q, p = float(debi_m3h), float(basinc_pa)
     if q <= 0 or p <= 0:
@@ -29,7 +29,7 @@ def fan_guc_duzeyi(debi_m3h: Union[int, float],
 
 
 def kanal_degerlendirme(hiz_ms: Union[int, float]) -> tuple[str, str]:
-    """Kanal hizina gore gurultu degerlendirmesi [STANDART-TEYIT].
+    """Kanal hizina gore gurultu degerlendirmesi [STANDART-TEYIT: TS ISO 3744, ASHRAE Handbook].
 
     -> (durum, aciklama). Sinir: 3 m/s sessiz, 5 m/s kabul.
     """
@@ -47,7 +47,7 @@ def nc_karsilastir(olculen_dba: Union[int, float],
                    mahal: str = "ofis") -> tuple[int, bool, str]:
     """Olculen dBA'yi mahal NC hedefine karsilastir.
 
-    Yaklasik cevrim NC ~ dBA - 7 [STANDART-TEYIT].
+    Yaklasik cevrim NC ~ dBA - 7 [STANDART-TEYIT: TS ISO 3744, ASHRAE Handbook].
     -> (hedef_NC, uygun: bool, aciklama).
     """
     dba = float(olculen_dba)

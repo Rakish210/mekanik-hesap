@@ -2,7 +2,7 @@
 
 Dayanak: TS EN 15288 (yuzme havuzlari guvenlik),
 TS EN 13451 (havuz donanimi). Devir suresi, filtrasyon hizi
-ve isitma kabulleri tip secimidir [STANDART-TEYIT]; isletme
+ve isitma kabulleri tip secimidir [STANDART-TEYIT: DIN 19643, TS 11899]; isletme
 sartnamesi ile netlestirilir.
 """
 
@@ -19,7 +19,7 @@ def havuz_hacim(uzunluk_m: float, genislik_m: float,
 
 def devir_debisi(hacim_m3: float, devir_saat: float = 6.0) -> float:
     """Havuz devir debisi, m3/h. Q = V/T. Devir suresi tip
-    secimidir [STANDART-TEYIT] (ozel/kamu havuzu farkli)."""
+    secimidir [STANDART-TEYIT: DIN 19643, TS 11899] (ozel/kamu havuzu farkli)."""
     v_m3, t_h = float(hacim_m3), float(devir_saat)
     if v_m3 <= 0 or t_h <= 0:
         raise ValueError("hacim ve devir suresi pozitif olmali")
@@ -31,7 +31,7 @@ def filtre_pompa(debir_m3h: float,
     """Filtre alani (m2) ve pompa debisi (m3/h) onerisi.
 
     A = Q/v_f. Filtrasyon hizi kum filtre pratigi
-    [STANDART-TEYIT]; katalog ile dogrulanir.
+    [STANDART-TEYIT: DIN 19643, TS 11899]; katalog ile dogrulanir.
     """
     q_m3h, vf = float(debir_m3h), float(filtrasyon_hizi)
     if q_m3h <= 0 or vf <= 0:
@@ -52,7 +52,7 @@ def kapali_havuz_havalandirma(havuz_alani_m2: float,
                               q_birim_m3h_m2: float = 10.0) -> float:
     """Kapali havuz havalandirma/nem alma debisi, m3/h.
 
-    Pratik birim debi ile on secim [STANDART-TEYIT]; nem yuku
+    Pratik birim debi ile on secim [STANDART-TEYIT: DIN 19643, TS 11899]; nem yuku
     buharlasma hesabiyla netlestirilir.
     """
     alan, qb = float(havuz_alani_m2), float(q_birim_m3h_m2)

@@ -2,12 +2,12 @@
 
 Dayanak: TS EN 12056-3 (yagmur suyu drenaji).
 Q = A*i/3600 (L/s). Yagis siddeti MGM/yerel idareden secilir
-[STANDART-TEYIT]. Cap tablosu pratik [STANDART-TEYIT].
+[STANDART-TEYIT: TS EN 12056-3]. Cap tablosu pratik [STANDART-TEYIT: TS EN 12056-3].
 """
 
 from typing import Union
 
-# Debi araligi -> onerilen cap, mm [STANDART-TEYIT]
+# Debi araligi -> onerilen cap, mm [STANDART-TEYIT: TS EN 12056-3]
 CAP_TABLOSU = ((2.0, 75.0), (5.0, 110.0), (9.0, 125.0),
                (14.0, 160.0), (25.0, 200.0))
 
@@ -38,7 +38,7 @@ def suzgec_dagilimi(alanlar_m2: list[Union[int, float]],
 
 
 def yagmur_boru_capi(debi_ls: Union[int, float]) -> float:
-    """Debiye gore yagmur boru capi, mm [STANDART-TEYIT]."""
+    """Debiye gore yagmur boru capi, mm [STANDART-TEYIT: TS EN 12056-3]."""
     debi = float(debi_ls)
     if debi <= 0:
         raise ValueError("debi pozitif olmali")

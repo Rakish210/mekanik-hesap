@@ -3,12 +3,12 @@
 Dayanak: TBDY (bina disi/mekanik donanim esdeger sismik yuk).
 Formul sadelestirilmis pratik: F_yatay = W * SDS * I / Rp.
 Katsayi kabulleri proje ve TBDY Bolum 6'ya gore secilir
-[STANDART-TEYIT]; nihai tahkik statik projeye aittir.
+[STANDART-TEYIT: TS 498, Eurocode 8]; nihai tahkik statik projeye aittir.
 """
 
 from typing import Union
 
-# DN'ye gore pratik max aski araligi, m [STANDART-TEYIT]
+# DN'ye gore pratik max aski araligi, m [STANDART-TEYIT: TS 498, Eurocode 8]
 ASKI_MESAFE = {
     15: 2.0, 20: 2.0, 25: 2.5, 32: 2.5, 40: 3.0, 50: 3.0,
     65: 3.5, 80: 3.5, 100: 4.0, 125: 4.0, 150: 4.5, 200: 5.0,
@@ -47,7 +47,7 @@ def aski_tasarim_yuku(agirlik_kg: Union[int, float],
 
 
 def max_aski_mesafe(dn: int) -> float:
-    """DN'ye gore max aski araligi, m [STANDART-TEYIT]."""
+    """DN'ye gore max aski araligi, m [STANDART-TEYIT: TS 498, Eurocode 8]."""
     d = int(dn)
     if d not in ASKI_MESAFE:
         raise ValueError("tabloda yok DN: %r" % (dn,))

@@ -3,7 +3,7 @@
 Dayanak: TS EN 12975 (gunes kolektorleri), TS EN 12976
 (fabrika yapimi sistemler), TS EN 12977 (ozel sistemler).
 Isinim ve verim kabulleri yoresel katalog/olcum ile
-netlestirilir [STANDART-TEYIT].
+netlestirilir [STANDART-TEYIT: TS EN 12975, TS EN 15316-4-3].
 """
 
 
@@ -33,7 +33,7 @@ def gunluk_enerji(kisi: float, kisi_basi_l: float = 50.0,
 def gunes_boyler(gunluk_l: float,
                  gunes_karsilama: float = 0.6) -> float:
     """Gunes destekli boyler hacmi, L. Gunluk tuketimin karsilama
-    oranina gore pratik secim [STANDART-TEYIT]."""
+    oranina gore pratik secim [STANDART-TEYIT: TS EN 12975, TS EN 15316-4-3]."""
     gun, oran = float(gunluk_l), float(gunes_karsilama)
     if gun <= 0 or not (0 < oran <= 1.0):
         raise ValueError("girisler gecerli olmali")
@@ -43,7 +43,7 @@ def gunes_boyler(gunluk_l: float,
 def solar_pompa(alan_m2: float,
                 ozgul_debi_l_h_m2: float = 30.0) -> float:
     """Solar cevre pompa debisi, L/h. V_dot = A*q_ozgul. Katalog
-    araligi pratik [STANDART-TEYIT]."""
+    araligi pratik [STANDART-TEYIT: TS EN 12975, TS EN 15316-4-3]."""
     alan, qoz = float(alan_m2), float(ozgul_debi_l_h_m2)
     if alan <= 0 or qoz <= 0:
         raise ValueError("girisler pozitif olmali")
@@ -55,7 +55,7 @@ def solar_genlesme(sistem_hacmi_l: float, t_soguk: float = 10.0,
                    p_maks_bar: float = 3.0,
                    antifriz_katsayi: float = 1.3) -> float:
     """Solar genlesme kabi nominal hacmi, L. Su genlesmesi ve
-    antifriz katsayisiyla pratik [STANDART-TEYIT]."""
+    antifriz katsayisiyla pratik [STANDART-TEYIT: TS EN 12975, TS EN 15316-4-3]."""
     v_l = float(sistem_hacmi_l)
     dt = float(t_sicak) - float(t_soguk)
     pmin, pmaks = float(p_min_bar), float(p_maks_bar)

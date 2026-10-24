@@ -62,7 +62,7 @@ def konsol_guvenli_mi(F: Union[int, float], Pmax: Union[int, float]) -> bool:
 from mekanik_hesap import colebrook
 
 # Kuru hava yogunlugu, kg/m3 (0 C, 101.325 kPa); dogalgaz bagil
-# yogunlugu ~0.6 pratik kabul [STANDART-TEYIT].
+# yogunlugu ~0.6 pratik kabul [STANDART-TEYIT: TS 7363, TS 13384].
 _RHO_HAVA = 1.293
 _GAZ_BAGIL = 0.6
 _G = 9.81
@@ -85,7 +85,7 @@ def basinc_kaybi(uzunluk_m: Union[int, float],
     """Boru basin kaybi, mbar. Darcy-Weisbach + colebrook surtunmesi.
 
     Kademe (21/50/300 mbar) yogunluk uzerinden dikkate alinir.
-    Puruzluluk ve yerel kayip katsayisi pratik [STANDART-TEYIT].
+    Puruzluluk ve yerel kayip katsayisi pratik [STANDART-TEYIT: TS 7363, TS 13384].
     """
     l_m = float(uzunluk_m)
     cap = float(cap_mm)
@@ -112,7 +112,7 @@ def boru_capi(debi_m3h: Union[int, float],
     """HBK boru capi, mm; bir ust standart capa yuvarlanir.
 
     V = 378*Q/(P*D2) bagintisindan hiz sinirini saglayan cap.
-    Hiz siniri TS 7363 esasli pratik [STANDART-TEYIT].
+    Hiz siniri TS 7363 esasli pratik [STANDART-TEYIT: TS 7363, TS 13384].
     """
     q = float(debi_m3h)
     p_bar = (1013.25 + float(basinc_mbar)) / 1000.0
@@ -127,7 +127,7 @@ def boru_capi(debi_m3h: Union[int, float],
 
 
 # Anma debisine gore sayac sinifi (m3/h), pratik secim
-# [STANDART-TEYIT]; G serisi EN 1359 esaslidir.
+# [STANDART-TEYIT: TS 7363, TS 13384]; G serisi EN 1359 esaslidir.
 _SAYAC = (("G4", 6.0), ("G6", 10.0), ("G10", 16.0), ("G16", 25.0),
           ("G25", 40.0), ("G40", 65.0), ("G65", 100.0),
           ("G100", 160.0))
@@ -148,7 +148,7 @@ def havalandirma_menfezi(guc_kw: Union[int, float],
                          katsayi_cm2_kw: float = 3.0) -> float:
     """Havalandirma menfez alani, cm2. A = P*k.
 
-    Katsayi TS 7363 esasli pratik kabul [STANDART-TEYIT]; alt/ust
+    Katsayi TS 7363 esasli pratik kabul [STANDART-TEYIT: TS 7363, TS 13384]; alt/ust
     menfez dagilimi ve yerlesim sarti dagitim sirketi onayina tabidir.
     """
     p, k = float(guc_kw), float(katsayi_cm2_kw)
@@ -162,7 +162,7 @@ def baca_kesiti(guc_kw: Union[int, float],
     """Baca kesit alani, cm2. A = P*k (TS 13384 esasli pratik).
 
     Katsayi ve cekis sarti proje/baca raporuna gore teyit edilir
-    [STANDART-TEYIT].
+    [STANDART-TEYIT: TS 7363, TS 13384].
     """
     p, k = float(guc_kw), float(katsayi_cm2_kw)
     if p <= 0 or k <= 0:
@@ -172,7 +172,7 @@ def baca_kesiti(guc_kw: Union[int, float],
 
 def alarm_zonu(cihaz_adet: int, zon_kapasite: int = 4) -> int:
     """Gaz alarm/selenoid vana zon sayisi. Pratik zon kapasitesi
-    [STANDART-TEYIT]; yerlesim ve vana tipi projeye aittir."""
+    [STANDART-TEYIT: TS 7363, TS 13384]; yerlesim ve vana tipi projeye aittir."""
     adet = int(cihaz_adet)
     kap = int(zon_kapasite)
     if adet <= 0 or kap <= 0:

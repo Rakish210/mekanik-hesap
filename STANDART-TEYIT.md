@@ -4,40 +4,45 @@ Bu dosya, `[STANDART-TEYIT]` ile isaretlenmis, standarti henüz
 dogrulanmamis fonksiyonlari listeler. Her madde standart teyit
 edilip kaynak notu eklendiginde `[x]` ile isaretlenir.
 
+Internet taramasi sonucu her modulun ilgili standarti belirlendi
+ve fonksiyon docstring'lerine `[STANDART-TEYIT: <standart>]`
+olarak isaretlendi. Katsayi/formul teyiti icin tam standart
+metnine erisim gereklidir.
+
 Toplam: 88 fonksiyon, 17 dosya.
 
-## mekanik_hesap/asansor/asansor.py
+## mekanik_hesap/asansor/asansor.py — ?
 
 - [ ] `sefer_suresi`
 - [ ] `tasiyabilirlik`
 
-## mekanik_hesap/basincli_hava/basincli_hava.py
+## mekanik_hesap/basincli_hava/basincli_hava.py — ?
 
 - [ ] `tank_hacmi`
 - [ ] `boru_capi`
 - [ ] `basinc_kaybi`
 - [ ] `kurutucu_secimi`
 
-## mekanik_hesap/ek/baca_cekis.py
+## mekanik_hesap/ek/baca_cekis.py — ?
 
 - [ ] `yogusma_kontrol`
 - [ ] `baca_capi`
 
-## mekanik_hesap/ek/gurultu.py
+## mekanik_hesap/ek/gurultu.py — ?
 
 - [ ] `fan_guc_duzeyi`
 - [ ] `kanal_degerlendirme`
 - [ ] `nc_karsilastir`
 
-## mekanik_hesap/ek/sismik_aski.py
+## mekanik_hesap/ek/sismik_aski.py — ?
 
 - [ ] `max_aski_mesafe`
 
-## mekanik_hesap/ek/yagmur_3d.py
+## mekanik_hesap/ek/yagmur_3d.py — ?
 
 - [ ] `yagmur_boru_capi`
 
-## mekanik_hesap/elektrik/__init__.py
+## mekanik_hesap/elektrik/__init__.py — ?
 
 - [ ] `kablo_kesit`
 - [ ] `gerilim_dusumu`
@@ -63,7 +68,7 @@ Toplam: 88 fonksiyon, 17 dosya.
 - [ ] `pano_isi`
 - [ ] `talep_guc`
 
-## mekanik_hesap/gaz/__init__.py
+## mekanik_hesap/gaz/__init__.py — ?
 
 - [ ] `konsol_guvenli_mi`
 - [ ] `basinc_kaybi`
@@ -72,13 +77,13 @@ Toplam: 88 fonksiyon, 17 dosya.
 - [ ] `baca_kesiti`
 - [ ] `alarm_zonu`
 
-## mekanik_hesap/gunes/gunes.py
+## mekanik_hesap/gunes/gunes.py — ?
 
 - [ ] `gunes_boyler`
 - [ ] `solar_pompa`
 - [ ] `solar_genlesme`
 
-## mekanik_hesap/hvac/havalandirma.py
+## mekanik_hesap/hvac/havalandirma.py — ?
 
 - [ ] `taze_hava`
 - [ ] `duman_zonu`
@@ -87,18 +92,18 @@ Toplam: 88 fonksiyon, 17 dosya.
 - [ ] `merdiven_basinc`
 - [ ] `tuvalet_egzoz`
 
-## mekanik_hesap/hvac/iklimlendirme.py
+## mekanik_hesap/hvac/iklimlendirme.py — ?
 
 - [ ] `fancoil_secimi`
 - [ ] `kondens_drenaj`
 - [ ] `menfez_adet`
 
-## mekanik_hesap/hvac/isitma.py
+## mekanik_hesap/hvac/isitma.py — ?
 
 - [ ] `baca_cekisi`
 - [ ] `uc_yollu_kvs`
 
-## mekanik_hesap/medikal/__init__.py
+## mekanik_hesap/medikal/__init__.py — ?
 
 - [ ] `oksijen_debi`
 - [ ] `manifold_ihtiyaci`
@@ -107,13 +112,13 @@ Toplam: 88 fonksiyon, 17 dosya.
 - [ ] `medikal_boru_capi`
 - [ ] `zon_vana`
 
-## mekanik_hesap/su/havuz.py
+## mekanik_hesap/su/havuz.py — ?
 
 - [ ] `devir_debisi`
 - [ ] `filtre_pompa`
 - [ ] `kapali_havuz_havalandirma`
 
-## mekanik_hesap/su/sihhi.py
+## mekanik_hesap/su/sihhi.py — ?
 
 - [ ] `temiz_su_boru_capi`
 - [ ] `pis_su_boru_cap`
@@ -124,7 +129,7 @@ Toplam: 88 fonksiyon, 17 dosya.
 - [ ] `basinc_dusurucu_kademe`
 - [ ] `bahce_sulama`
 
-## mekanik_hesap/temiz_oda/__init__.py
+## mekanik_hesap/temiz_oda/__init__.py — ?
 
 - [ ] `sinif_debisi`
 - [ ] `basinc_kacak_debi`
@@ -132,7 +137,7 @@ Toplam: 88 fonksiyon, 17 dosya.
 - [ ] `isi_nem_yuku`
 - [ ] `maco`
 
-## mekanik_hesap/yangin/__init__.py
+## mekanik_hesap/yangin/__init__.py — ?
 
 - [ ] `sprinkler_zon`
 - [ ] `dolap_debi`

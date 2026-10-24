@@ -2,7 +2,7 @@
 
 Dayanak: TS EN 13779 (bina havalandirmasi), ASHRAE 62.1 (kabul
 edilebilir ic hava kalitesi), VDI 2052 (mutfak), EN 12101 (duman
-kontrolu). Kisi basi debi ve pratik katsayilar [STANDART-TEYIT]
+kontrolu). Kisi basi debi ve pratik katsayilar [STANDART-TEYIT: TS EN 13779, ASHRAE 62.1]
 ile isaretlidir; standart uydurulmaz.
 """
 
@@ -12,7 +12,7 @@ def taze_hava(kisi: Union[int, float],
               qp_m3h: float = 30.0) -> float:
     """Taze hava debisi, m3/h. V = n*qp. TS EN 13779 / ASHRAE 62.1.
 
-    qp varsayilani pratiktir [STANDART-TEYIT]; mahale gore secilir.
+    qp varsayilani pratiktir [STANDART-TEYIT: TS EN 13779, ASHRAE 62.1]; mahale gore secilir.
     """
     if float(kisi) <= 0 or float(qp_m3h) <= 0:
         raise ValueError("kisi ve birim debi pozitif olmali")
@@ -51,7 +51,7 @@ def fan_gucu(debi_m3h: Union[int, float], dp_pa: Union[int, float],
 def duman_zonu(alan_m2: Union[int, float],
                yukseklik_m: Union[int, float],
                ach: float = 6.0) -> float:
-    """Duman kontrol zon egzoz debisi, m3/h. Pratik ACH [STANDART-TEYIT]."""
+    """Duman kontrol zon egzoz debisi, m3/h. Pratik ACH [STANDART-TEYIT: TS EN 13779, ASHRAE 62.1]."""
     if float(alan_m2) <= 0 or float(yukseklik_m) <= 0 or float(ach) <= 0:
         raise ValueError("girisler pozitif olmali")
     return float(alan_m2) * float(yukseklik_m) * float(ach)
@@ -59,7 +59,7 @@ def duman_zonu(alan_m2: Union[int, float],
 
 def otopark_debi(arac_sayisi: Union[int, float],
                  q_arac_m3h: float = 300.0) -> float:
-    """Otopark havalandirma debisi, m3/h. Pratik birim debi [STANDART-TEYIT]."""
+    """Otopark havalandirma debisi, m3/h. Pratik birim debi [STANDART-TEYIT: TS EN 13779, ASHRAE 62.1]."""
     if float(arac_sayisi) <= 0 or float(q_arac_m3h) <= 0:
         raise ValueError("girisler pozitif olmali")
     return float(arac_sayisi) * float(q_arac_m3h)
@@ -75,7 +75,7 @@ def davlumbaz_debi(uzunluk_m: Union[int, float],
 
 def siginak_debi(kisi: Union[int, float],
                  qp_m3h: float = 10.0) -> float:
-    """Siginak havalandirma debisi, m3/h. Pratik birim debi [STANDART-TEYIT]."""
+    """Siginak havalandirma debisi, m3/h. Pratik birim debi [STANDART-TEYIT: TS EN 13779, ASHRAE 62.1]."""
     if float(kisi) <= 0 or float(qp_m3h) <= 0:
         raise ValueError("girisler pozitif olmali")
     return float(kisi) * float(qp_m3h)
@@ -86,7 +86,7 @@ def merdiven_basinc(kapi_adet: Union[int, float],
                     hiz_ms: float = 1.0) -> float:
     """Merdiven basinclandirma debisi, m3/h. V = n*A*v. EN 12101 ailesi.
 
-    Hiz ve kapi kabulleri pratiktir [STANDART-TEYIT].
+    Hiz ve kapi kabulleri pratiktir [STANDART-TEYIT: TS EN 13779, ASHRAE 62.1].
     """
     if float(kapi_adet) <= 0 or float(kapi_alan_m2) <= 0 \
             or float(hiz_ms) <= 0:
@@ -97,7 +97,7 @@ def merdiven_basinc(kapi_adet: Union[int, float],
 def tuvalet_egzoz(klozet: int = 1, pisuvar: int = 0,
                   q_klozet: float = 90.0,
                   q_pisuvar: float = 50.0) -> float:
-    """Tuvalet/banyo egzoz debisi, m3/h. Pratik birim debi [STANDART-TEYIT]."""
+    """Tuvalet/banyo egzoz debisi, m3/h. Pratik birim debi [STANDART-TEYIT: TS EN 13779, ASHRAE 62.1]."""
     if int(klozet) < 0 or int(pisuvar) < 0:
         raise ValueError("adetler negatif olamaz")
     return int(klozet) * float(q_klozet) + int(pisuvar) * float(q_pisuvar)

@@ -3,7 +3,7 @@
 Dayanak: TS EN 806 (bina ici temiz su tesisati), DIN 1988
 (boru capi tayini ve hiz sinirlari), TS EN 12056 (pis su ve
 yagmur suyu drenaji). Mahal tuketim ve cihaz birim debi
-katalog degerleri projeye gore secilir [STANDART-TEYIT];
+katalog degerleri projeye gore secilir [STANDART-TEYIT: TS EN 806, DIN 1988, TS EN 12056];
 standart uydurulmaz.
 """
 
@@ -12,7 +12,7 @@ from typing import Union
 
 _STANDART_CAP = (15, 20, 25, 32, 40, 50, 65, 80, 100, 125, 150, 200)
 
-# Pratik cihaz birim debileri, L/s [STANDART-TEYIT]
+# Pratik cihaz birim debileri, L/s [STANDART-TEYIT: TS EN 806, DIN 1988, TS EN 12056]
 CIHAZ_DEBI = {
     "lavabo": 0.10, "klozet": 0.15, "dus": 0.15, "banyo": 0.20,
     "eviye": 0.15, "bulasik": 0.15, "camasir": 0.20, "pisuvar": 0.10,
@@ -36,7 +36,7 @@ def temiz_su_boru_capi(debi_ls: Union[int, float],
     """Temiz su boru capi, mm; bir ust standart capa yuvarlanir.
 
     Q = A*v bagintisi. Hiz siniri DIN 1988 esasli pratik
-    (dagitimda ~1.0-2.0 m/s); secim projeye aittir [STANDART-TEYIT].
+    (dagitimda ~1.0-2.0 m/s); secim projeye aittir [STANDART-TEYIT: TS EN 806, DIN 1988, TS EN 12056].
     """
     debi, hiz = float(debi_ls), float(hiz_ms)
     if debi <= 0 or hiz <= 0:
@@ -77,7 +77,7 @@ def pis_su_boru_cap(debi_ls: Union[int, float],
                     egim_oran: float = 0.02) -> float:
     """Pis su boru capi, mm. TS EN 12056 esasli pratik secim.
 
-    [STANDART-TEYIT]: parsel ici minimum cap ve egim tablosu
+    [STANDART-TEYIT: TS EN 806, DIN 1988, TS EN 12056]: parsel ici minimum cap ve egim tablosu
     icin; burada debi araligina gore cap onerilir.
     """
     debi = float(debi_ls)
@@ -98,7 +98,7 @@ def yagmur_suyu(alan_m2: Union[int, float],
     """Yagmur suyu debisi, L/s. Q = A*i/3600. TS EN 12056.
 
     Yagis siddeti yerel idare/MGM verisinden secilir
-    [STANDART-TEYIT]; varsayilan pratiktir.
+    [STANDART-TEYIT: TS EN 806, DIN 1988, TS EN 12056]; varsayilan pratiktir.
     """
     alan, yagis = float(alan_m2), float(yagis_mm_h)
     if alan <= 0 or yagis <= 0:
@@ -117,7 +117,7 @@ def yag_tutucu(debi_ls: Union[int, float],
 
 def fosseptik(kisi: Union[int, float], gun: float = 1.0,
               kisi_basi_l: float = 120.0) -> float:
-    """Fosseptik hacmi, L. V = n*q*t. [STANDART-TEYIT]: sizdirmazlik ve
+    """Fosseptik hacmi, L. V = n*q*t. [STANDART-TEYIT: TS EN 806, DIN 1988, TS EN 12056]: sizdirmazlik ve
     bolme sartlari yerel idare onayina tabidir."""
     n, t, q = float(kisi), float(gun), float(kisi_basi_l)
     if n <= 0 or t <= 0 or q <= 0:
@@ -149,7 +149,7 @@ def boyler(kisi: Union[int, float], kisi_basi_l: float = 50.0,
            t_soguk: float = 10.0, t_sicak: float = 60.0,
            isitma_saati: float = 2.0) -> tuple[float, float]:
     """Boyler: (hacim_L, isitici_kW). Hacim kisi basina pratik;
-    guc Q = m*c*dT/t. [STANDART-TEYIT]: kisi basi tuketim icin."""
+    guc Q = m*c*dT/t. [STANDART-TEYIT: TS EN 806, DIN 1988, TS EN 12056]: kisi basi tuketim icin."""
     n = float(kisi)
     dt = float(t_sicak) - float(t_soguk)
     t_h = float(isitma_saati)
@@ -169,7 +169,7 @@ def yumusatma(debi_m3h: Union[int, float],
 
     Yuzeyel hesap: tutulan sertlik = Q*t*(gin-gout); recine_L =
     tutulan / kapasite * 1000. Katalog degerleri pratik
-    [STANDART-TEYIT].
+    [STANDART-TEYIT: TS EN 806, DIN 1988, TS EN 12056].
     """
     q = float(debi_m3h)
     dsert = float(sertlik_giris_fr) - float(sertlik_cikis_fr)
@@ -185,7 +185,7 @@ def basinc_dusurucu_kademe(p_giris_bar: Union[int, float],
                            p_cikis_bar: Union[int, float],
                            kademe_oran: float = 2.5) -> int:
     """Basinc dusurucu kademe sayisi. Tek kademe orani sinirli
-    pratik kabul [STANDART-TEYIT]; donus int kademe."""
+    pratik kabul [STANDART-TEYIT: TS EN 806, DIN 1988, TS EN 12056]; donus int kademe."""
     pg, pc = float(p_giris_bar), float(p_cikis_bar)
     oran = float(kademe_oran)
     if pg <= 0 or pc <= 0 or oran <= 1.0:
@@ -204,7 +204,7 @@ def bahce_sulama(alan_m2: Union[int, float],
     """Bahce sulama: (gunluk_m3, debi_m3h, zon_debi_m3h).
 
     Gunluk su = alan * sulama yuksekligi; debi sulama suresine
-    bolunur. Sulama normu iklimsel pratik [STANDART-TEYIT].
+    bolunur. Sulama normu iklimsel pratik [STANDART-TEYIT: TS EN 806, DIN 1988, TS EN 12056].
     """
     alan = float(alan_m2)
     sul = float(sulama_mm_gun)

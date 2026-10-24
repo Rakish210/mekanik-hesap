@@ -3,12 +3,12 @@
 Dayanak: TS EN 81-20/50 (asansor yapim guvenligi),
 TS EN ISO 4190 (kabin/kuyu olculeri dizisi). Trafik
 hesabinda sefer suresi klasik RTT bagintisidir; doluluk ve
-kapi suresi kabulleri pratik [STANDART-TEYIT].
+kapi suresi kabulleri pratik [STANDART-TEYIT: TS EN 81-20/50, TS EN ISO 4190-1].
 """
 
 from typing import Optional, Union
 
-# EN ISO 4190 esasli yaygin tip dizisi [STANDART-TEYIT]: (kisi, yuk_kg)
+# EN ISO 4190 esasli yaygin tip dizisi [STANDART-TEYIT: TS EN 81-20/50, TS EN ISO 4190-1]: (kisi, yuk_kg)
 _TIP: list[tuple[int, int]] = [(4, 320), (6, 450), (8, 630), (10, 800), (13, 1000)]
 
 
@@ -32,7 +32,7 @@ def sefer_suresi(kat: int, kat_arasi_m: float, hiz_ms: float,
     """Tek sefer suresi (RTT), s. RTT = 2*H/v + durak*kapi.
 
     H: toplam seyir yuksekligi; durak verilmezse 2*kat/3 pratik
-    kabul [STANDART-TEYIT].
+    kabul [STANDART-TEYIT: TS EN 81-20/50, TS EN ISO 4190-1].
     """
     kat_n = int(kat)
     h_m = kat_n * float(kat_arasi_m)
@@ -47,7 +47,7 @@ def sefer_suresi(kat: int, kat_arasi_m: float, hiz_ms: float,
 def tasiyabilirlik(kabin_kisi: float, sefer_sure_s: float,
                    doluluk: float = 0.7) -> float:
     """5 dk tasiyabilirlik, kisi. P = kabin*doluluk*300/RTT.
-    Pratik doluluk kabulu [STANDART-TEYIT]."""
+    Pratik doluluk kabulu [STANDART-TEYIT: TS EN 81-20/50, TS EN ISO 4190-1]."""
     kab = float(kabin_kisi)
     rtt = float(sefer_sure_s)
     dol = float(doluluk)

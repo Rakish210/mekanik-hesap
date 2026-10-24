@@ -2,7 +2,7 @@
 
 Dayanak: ASHRAE Handbook Fundamentals (sogutma yuku bilesen toplami),
 TS EN 13779 (hava debileri). Katalog karsilastirmalari ve dagitim
-katsayilari pratik/ampiriktir, [STANDART-TEYIT] ile isaretlidir.
+katsayilari pratik/ampiriktir, [STANDART-TEYIT: TS EN 13779, ASHRAE Handbook] ile isaretlidir.
 """
 
 import math
@@ -29,7 +29,7 @@ def fancoil_secimi(q_oda_w: Union[int, float],
                    emniyet: float = 1.1) -> float:
     """Fancoil secimi: yuku karsilayan ilk katalog cihazi, W.
 
-    [STANDART-TEYIT]: uretici katalog eslestirmesi pratiktir.
+    [STANDART-TEYIT: TS EN 13779, ASHRAE Handbook]: uretici katalog eslestirmesi pratiktir.
     """
     hedef = float(q_oda_w) * float(emniyet)
     if hedef <= 0 or not katalog_w:
@@ -103,7 +103,7 @@ def soguk_su_boru(debi_m3h: Union[int, float],
 
 
 def kondens_drenaj(q_kw: Union[int, float]) -> int:
-    """Kondens drenaj capi, mm. Pratik tablo [STANDART-TEYIT]."""
+    """Kondens drenaj capi, mm. Pratik tablo [STANDART-TEYIT: TS EN 13779, ASHRAE Handbook]."""
     q = float(q_kw)
     if q <= 0:
         raise ValueError("kapasite pozitif olmali")
@@ -129,7 +129,7 @@ def kanal_kesiti(debi_m3h: Union[int, float],
 
 def menfez_adet(debi_m3h: Union[int, float],
                 menfez_m3h: Union[int, float]) -> int:
-    """Menfez/difuzor adedi. Pratik katalog eslestirme [STANDART-TEYIT]."""
+    """Menfez/difuzor adedi. Pratik katalog eslestirme [STANDART-TEYIT: TS EN 13779, ASHRAE Handbook]."""
     debi, kap = float(debi_m3h), float(menfez_m3h)
     if debi <= 0 or kap <= 0:
         raise ValueError("debiler pozitif olmali")

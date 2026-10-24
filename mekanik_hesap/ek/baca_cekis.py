@@ -2,7 +2,7 @@
 
 Dayanak: TS 13384 (baca tasarimi; cekis ve kesit hesabi).
 Cekis: dp = p/R * (1/Tdis - 1/Tbaca) * g * H.
-Yogusma esikleri pratik kabul [STANDART-TEYIT]; uretici ve
+Yogusma esikleri pratik kabul [STANDART-TEYIT: TS 13384, TS 7363]; uretici ve
 TS 13384 sartlari esastir.
 """
 
@@ -33,7 +33,7 @@ def yogusma_kontrol(t_baca_c: Union[int, float],
                     ) -> tuple[bool, str]:
     """Yogusma riski -> (risk: bool, aciklama).
 
-    Asit cig noktasi esikleri pratik [STANDART-TEYIT]:
+    Asit cig noktasi esikleri pratik [STANDART-TEYIT: TS 13384, TS 7363]:
     dogalgaz ~55 C, siviyakit ~130 C.
     """
     t = float(t_baca_c)
@@ -50,7 +50,7 @@ def baca_capi(debi_m3h: Union[int, float],
               hiz_ms: float = 4.0) -> float:
     """Baca ic capi, mm; bir ust 10 mm'ye yuvarlanir.
 
-    Hiz kabulu pratik [STANDART-TEYIT]; TS 13384 basin kaybi
+    Hiz kabulu pratik [STANDART-TEYIT: TS 13384, TS 7363]; TS 13384 basin kaybi
     sarti saglanmalidir.
     """
     debi, hiz = float(debi_m3h), float(hiz_ms)
