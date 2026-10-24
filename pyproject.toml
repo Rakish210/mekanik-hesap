@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mekanik-hesap"
-version = "0.1.0"
+version = "1.0.0"
 description = "Mekanik tesisat hesap kutuphanesi: TTT/HBK/ML/kesif hesap motoru"
 readme = "README.md"
 license = { text = "MIT" }

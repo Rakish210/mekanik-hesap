@@ -8,7 +8,7 @@ Mekanik tesisat hesap kutuphanesi: TTT/HBK/ML/kesif hesap motoru + test.
   yangin, dogalgaz, asansor, basincli hava, medikal gaz, temiz oda,
   yardimci hesaplar, elektrik (tesisat ara yuz hesaplari).
 - Tam liste: `KATALOG.md` (126 hesap, 15 kategori).
-- Ilk kanitli modul: `mekanik_hesap/gas/` (TTT/HBK-hiz/isil-genlesme/konsol).
+- Ilk kanitli modul: `mekanik_hesap/gaz/` (TTT/HBK-hiz/isil-genlesme/konsol).
 
 ## Kurulum
 

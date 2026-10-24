@@ -222,7 +222,7 @@ ampirik katsayilar [STANDART-TEYIT].
 | Gunes Enerjisi | 5 | tamam | mekanik_hesap/gunes/gunes.py |
 | Havuz Tesisati | 4 | tamam | mekanik_hesap/su/havuz.py |
 | Yangin Tesisati | 10 | tamam | mekanik_hesap/yangin/ |
-| Dogalgaz | 8 | tamam | mekanik_hesap/gas/ + mekanik_hesap/gaz/ |
+| Dogalgaz | 8 | tamam | mekanik_hesap/gaz/ |
 | Asansor | 2 | tamam | mekanik_hesap/asansor/asansor.py |
 | Basincli Hava | 4 | tamam | mekanik_hesap/basincli_hava/basincli_hava.py |
 | Medikal Gaz | 5 | tamam | mekanik_hesap/medikal/ |
