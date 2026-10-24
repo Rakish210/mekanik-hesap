@@ -6,14 +6,17 @@ kaynak ve site icerigi yoktur.
 """
 
 import math
+from typing import Union
 
 
-def us_al(taban, us):
+def us_al(taban: Union[int, float],
+          us: Union[int, float]) -> float:
     """Ust alma: taban**us."""
     return float(taban) ** float(us)
 
 
-def kok(deger, derece=2.0):
+def kok(deger: Union[int, float],
+       derece: Union[int, float] = 2.0) -> float:
     """n. dereceden kok. deger >= 0, derece > 0 olmali."""
     x, n = float(deger), float(derece)
     if x < 0 or n <= 0:
@@ -21,7 +24,7 @@ def kok(deger, derece=2.0):
     return x ** (1.0 / n)
 
 
-def log10(deger):
+def log10(deger: Union[int, float]) -> float:
     """10 tabaninda logaritma. deger > 0 olmali."""
     x = float(deger)
     if x <= 0:
@@ -29,7 +32,7 @@ def log10(deger):
     return math.log10(x)
 
 
-def ln(deger):
+def ln(deger: Union[int, float]) -> float:
     """Dogal logaritma. deger > 0 olmali."""
     x = float(deger)
     if x <= 0:
@@ -37,27 +40,27 @@ def ln(deger):
     return math.log(x)
 
 
-def exp(deger):
+def exp(deger: Union[int, float]) -> float:
     """Ustel fonksiyon: e**deger."""
     return math.exp(float(deger))
 
 
-def sin_deg(aci_deg):
+def sin_deg(aci_deg: Union[int, float]) -> float:
     """Sinus, aci derece."""
     return math.sin(math.radians(float(aci_deg)))
 
 
-def cos_deg(aci_deg):
+def cos_deg(aci_deg: Union[int, float]) -> float:
     """Kosinus, aci derece."""
     return math.cos(math.radians(float(aci_deg)))
 
 
-def tan_deg(aci_deg):
+def tan_deg(aci_deg: Union[int, float]) -> float:
     """Tanjant, aci derece."""
     return math.tan(math.radians(float(aci_deg)))
 
 
-def faktoriyel(n):
+def faktoriyel(n: Union[int, float]) -> float:
     """Faktoriyel. n negatif olmayan tamsayi olmali."""
     k = int(n)
     if k != float(n) or k < 0:
@@ -65,7 +68,8 @@ def faktoriyel(n):
     return float(math.factorial(k))
 
 
-def yuzde(parca, butun):
+def yuzde(parca: Union[int, float],
+          butun: Union[int, float]) -> float:
     """Yuzde: parca/butun*100. butun sifir olamaz."""
     p, b = float(parca), float(butun)
     if b == 0:
@@ -73,16 +77,17 @@ def yuzde(parca, butun):
     return p / b * 100.0
 
 
-def hipotenus(a, b):
+def hipotenus(a: Union[int, float],
+              b: Union[int, float]) -> float:
     """Dik kenarlardan hipotenus: kok(a2+b2)."""
     return math.hypot(float(a), float(b))
 
 
-def deg_to_rad(aci_deg):
+def deg_to_rad(aci_deg: Union[int, float]) -> float:
     """Dereceyi radyana cevirir."""
     return math.radians(float(aci_deg))
 
 
-def rad_to_deg(aci_rad):
+def rad_to_deg(aci_rad: Union[int, float]) -> float:
     """Radyani dereceye cevirir."""
     return math.degrees(float(aci_rad))
