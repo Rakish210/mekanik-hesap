@@ -6,6 +6,8 @@ Katsayi kabulleri proje ve TBDY Bolum 6'ya gore secilir
 [STANDART-TEYIT]; nihai tahkik statik projeye aittir.
 """
 
+from typing import Union
+
 # DN'ye gore pratik max aski araligi, m [STANDART-TEYIT]
 ASKI_MESAFE = {
     15: 2.0, 20: 2.0, 25: 2.5, 32: 2.5, 40: 3.0, 50: 3.0,
@@ -13,7 +15,9 @@ ASKI_MESAFE = {
 }
 
 
-def sismik_kuvvet(agirlik_kg, sds, onem=1.0, rp=2.5):
+def sismik_kuvvet(agirlik_kg: Union[int, float], sds: Union[int, float],
+                  onem: Union[int, float] = 1.0,
+                  rp: Union[int, float] = 2.5) -> float:
     """Yatay esdeger sismik kuvvet, N.
 
     agirlik_kg: askiya gelen toplam agirlik (boru+su+izolasyon);
@@ -26,7 +30,11 @@ def sismik_kuvvet(agirlik_kg, sds, onem=1.0, rp=2.5):
     return w * 9.81 * s * i / r
 
 
-def aski_tasarim_yuku(agirlik_kg, sds, onem=1.0, rp=2.5):
+def aski_tasarim_yuku(agirlik_kg: Union[int, float],
+                      sds: Union[int, float],
+                      onem: Union[int, float] = 1.0,
+                      rp: Union[int, float] = 2.5
+                      ) -> tuple[float, float, float]:
     """Aski tasarim yuku -> (dusey_N, yatay_N, bileske_N).
 
     Dusey = agirlik; yatay = sismik kuvvet; bileske vektorel.
@@ -38,7 +46,7 @@ def aski_tasarim_yuku(agirlik_kg, sds, onem=1.0, rp=2.5):
     return dusey, yatay, _m.sqrt(dusey ** 2 + yatay ** 2)
 
 
-def max_aski_mesafe(dn):
+def max_aski_mesafe(dn: int) -> float:
     """DN'ye gore max aski araligi, m [STANDART-TEYIT]."""
     d = int(dn)
     if d not in ASKI_MESAFE:
