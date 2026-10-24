@@ -1,7 +1,7 @@
 """Medikal gaz hesaplari (KATALOG.md 11. baslik, 5 hesap).
 
 Dayanak: HTM 02-01 (medikal gaz boru sistemleri tasarim ve
-isletme), ISO 7396-1 ( Tibbi gaz boru sistemleri).
+isletme), ISO 7396-1 (Tibbi gaz boru sistemleri).
 Priz birim debileri, eszamanlilik katsayilari, boru hiz sinirlari
 ve manifold otonomi sureleri hastane tipine gore degisir; deger
 secimi projeye aittir, pratik kabuller [STANDART-TEYIT] ile
@@ -9,9 +9,12 @@ isaretlidir. Teyit edilmeden imalata esas alinmaz.
 """
 
 import math
+from typing import Union
 
 
-def oksijen_debi(kalemler, eszamanlilik=0.3):
+def oksijen_debi(kalemler: list[tuple[Union[int, float],
+                                        Union[int, float]]],
+                  eszamanlilik: float = 0.3) -> float:
     """Oksijen toplami, L/dk.
 
     kalemler: [(birim_debi_Ldk, adet), ...]; sonuc =
@@ -30,8 +33,11 @@ def oksijen_debi(kalemler, eszamanlilik=0.3):
     return top * esz
 
 
-def manifold_ihtiyaci(gunluk_m3, otonomi_gun=7.0, tup_su_hacmi_l=50.0,
-                      dolum_bar=200.0):
+def manifold_ihtiyaci(gunluk_m3: Union[int, float],
+                      otonomi_gun: float = 7.0,
+                      tup_su_hacmi_l: float = 50.0,
+                      dolum_bar: float = 200.0
+                      ) -> tuple[float, int]:
     """Manifold: (toplam_m3, tup_adet).
 
     toplam = gunluk*otonomi; tek tup gaz m3 = su_hacmi_L/1000*bar.
@@ -48,7 +54,8 @@ def manifold_ihtiyaci(gunluk_m3, otonomi_gun=7.0, tup_su_hacmi_l=50.0,
     return toplam, int(math.ceil(toplam / tek))
 
 
-def vakum_kapasitesi(priz_adet, birim_l_dk=40.0, eszaman=0.3):
+def vakum_kapasitesi(priz_adet: int, birim_l_dk: float = 40.0,
+                     eszaman: float = 0.3) -> float:
     """Vakum pompasi kapasitesi, L/dk (m3/h icin *0.06).
 
     Birim cekis ve eszaman pratik kabul [STANDART-TEYIT];
@@ -61,7 +68,8 @@ def vakum_kapasitesi(priz_adet, birim_l_dk=40.0, eszaman=0.3):
     return adet * birim * esz
 
 
-def medikal_hava_debisi(priz_adet, birim_l_dk=50.0, eszaman=0.3):
+def medikal_hava_debisi(priz_adet: int, birim_l_dk: float = 50.0,
+                        eszaman: float = 0.3) -> float:
     """Medikal basincli hava debisi, L/dk.
 
     Birim debi ve eszaman pratik kabul [STANDART-TEYIT];
@@ -75,7 +83,8 @@ def medikal_hava_debisi(priz_adet, birim_l_dk=50.0, eszaman=0.3):
     return adet * birim * esz
 
 
-def medikal_boru_capi(debi_l_dk, hiz_ms=8.0):
+def medikal_boru_capi(debi_l_dk: Union[int, float],
+                      hiz_ms: float = 8.0) -> float:
     """Medikal gaz boru ic capi, mm. d = kok(4Q/pi v).
 
     Gaz hizi siniri HTM 02-01 esasli pratik kabul
@@ -88,7 +97,8 @@ def medikal_boru_capi(debi_l_dk, hiz_ms=8.0):
     return math.sqrt(4.0 * q / math.pi / hiz) * 1000.0
 
 
-def zon_vana(priz_adet, zon_max_priz=20):
+def zon_vana(priz_adet: int, zon_max_priz: int = 20
+             ) -> tuple[int, int]:
     """Priz ve zon vana yerlesimi: (priz_adet, zon_vana_adet).
 
     Zon basina azami priz pratik kabul [STANDART-TEYIT];
