@@ -7,12 +7,15 @@ TS 13384 sartlari esastir.
 """
 
 import math
+from typing import Union
 
 _R_HAVA = 287.0  # J/(kg.K)
 _G = 9.81
 
 
-def cekis(h_m, t_baca_c, t_dis_c, p_pa=101325.0):
+def cekis(h_m: Union[int, float], t_baca_c: Union[int, float],
+          t_dis_c: Union[int, float],
+          p_pa: float = 101325.0) -> float:
     """Baca cekisi, Pa. Tbaca > Tdis olmalidir."""
     h = float(h_m)
     tb = float(t_baca_c) + 273.15
@@ -25,7 +28,9 @@ def cekis(h_m, t_baca_c, t_dis_c, p_pa=101325.0):
     return p / _R_HAVA * (1.0 / td - 1.0 / tb) * _G * h
 
 
-def yogusma_kontrol(t_baca_c, yakit="dogalgaz"):
+def yogusma_kontrol(t_baca_c: Union[int, float],
+                    yakit: str = "dogalgaz"
+                    ) -> tuple[bool, str]:
     """Yogusma riski -> (risk: bool, aciklama).
 
     Asit cig noktasi esikleri pratik [STANDART-TEYIT]:
@@ -41,7 +46,8 @@ def yogusma_kontrol(t_baca_c, yakit="dogalgaz"):
     return True, "baca gazi esik altinda: yogusmali baca gerekir"
 
 
-def baca_capi(debi_m3h, hiz_ms=4.0):
+def baca_capi(debi_m3h: Union[int, float],
+              hiz_ms: float = 4.0) -> float:
     """Baca ic capi, mm; bir ust 10 mm'ye yuvarlanir.
 
     Hiz kabulu pratik [STANDART-TEYIT]; TS 13384 basin kaybi
