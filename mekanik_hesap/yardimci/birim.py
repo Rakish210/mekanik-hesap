@@ -5,10 +5,13 @@ uretmez; mekanik_hesap.units fonksiyonlarini katalog kalemi
 olarak sarar.
 """
 
+from typing import Union
+
 from mekanik_hesap.units import convert, c_to_k, k_to_c
 
 
-def birim_cevir(deger, kaynak_birim, hedef_birim):
+def birim_cevir(deger: Union[int, float], kaynak_birim: str,
+                hedef_birim: str) -> float:
     """Birim cevirir. Ornek: birim_cevir(1000, "mm", "m") -> 1.0.
 
     Gecerli birimler: mm/cm/m/km, pa/kpa/bar/mbar/mmhg/mss,
@@ -18,11 +21,11 @@ def birim_cevir(deger, kaynak_birim, hedef_birim):
     return convert(deger, kaynak_birim, hedef_birim)
 
 
-def santigrat_to_kelvin(t_c):
+def santigrat_to_kelvin(t_c: Union[int, float]) -> float:
     """Santigradi kelvine cevirir."""
     return c_to_k(t_c)
 
 
-def kelvin_to_santigrat(t_k):
+def kelvin_to_santigrat(t_k: Union[int, float]) -> float:
     """Kelvini santigrada cevirir."""
     return k_to_c(t_k)
