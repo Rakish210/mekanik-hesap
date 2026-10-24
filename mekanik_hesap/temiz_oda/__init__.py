@@ -9,6 +9,7 @@ guvenlik faktoru urune gore secilir [STANDART-TEYIT].
 """
 
 import math
+from typing import Optional, Union
 
 # Sinifa gore tipik hava degisim sayisi, 1/h.
 # Pratik aralik [STANDART-TEYIT]; ISO 14644 sinif + geri kazanim
@@ -24,7 +25,8 @@ RHO_HAVA = 1.2
 CP_HAVA = 1.005
 
 
-def ach_debi(hacim_m3, ach):
+def ach_debi(hacim_m3: Union[int, float],
+             ach: Union[int, float]) -> float:
     """Besleme debisi, m3/h. Q = V*ACH."""
     v, n = float(hacim_m3), float(ach)
     if v <= 0 or n <= 0:
@@ -32,7 +34,8 @@ def ach_debi(hacim_m3, ach):
     return v * n
 
 
-def sinif_debisi(hacim_m3, iso_sinif="ISO7"):
+def sinif_debisi(hacim_m3: Union[int, float],
+                 iso_sinif: str = "ISO7") -> float:
     """Sinifa gore besleme debisi, m3/h. ACH tablosu pratik
     [STANDART-TEYIT]."""
     if iso_sinif not in ACH_TABLOSU:
@@ -40,7 +43,8 @@ def sinif_debisi(hacim_m3, iso_sinif="ISO7"):
     return ach_debi(hacim_m3, ACH_TABLOSU[iso_sinif])
 
 
-def iso_ust_limit(sinif_n, partikul_um=0.5):
+def iso_ust_limit(sinif_n: Union[int, float],
+                  partikul_um: float = 0.5) -> float:
     """ISO 14644-1 ust limit konsantrasyonu, parcacik/m3.
 
     Cn = 10^N * (0.1/D)^2.08; D mikrometre, 0.1<=D<=5.
@@ -52,7 +56,7 @@ def iso_ust_limit(sinif_n, partikul_um=0.5):
     return (10.0 ** n) * ((0.1 / d) ** 2.08)
 
 
-def ornek_nokta(alan_m2):
+def ornek_nokta(alan_m2: Union[int, float]) -> int:
     """Kalifikasyon en az ornekleme nokta sayisi, adet.
 
     ISO 14644-1: NL = kok(A), yukari yuvarlanir (A m2).
@@ -63,7 +67,10 @@ def ornek_nokta(alan_m2):
     return int(math.ceil(math.sqrt(a)))
 
 
-def basinc_kacak_debi(aciklik_m2, dp_pa=12.5, rho=RHO_HAVA, cd=0.65):
+def basinc_kacak_debi(aciklik_m2: Union[int, float],
+                      dp_pa: float = 12.5,
+                      rho: float = RHO_HAVA,
+                      cd: float = 0.65) -> float:
     """Fark basincta kacis debisi, m3/h. Q = Cd*A*kok(2 dp/rho).
 
     Basinc kademesi (or. 10-15 Pa) ve Cd pratik kabul
@@ -76,7 +83,8 @@ def basinc_kacak_debi(aciklik_m2, dp_pa=12.5, rho=RHO_HAVA, cd=0.65):
     return q * 3600.0
 
 
-def hepa_sayisi(debi_m3h, birim_m3h=1000.0):
+def hepa_sayisi(debi_m3h: Union[int, float],
+                birim_m3h: float = 1000.0) -> int:
     """HEPA filtre adedi. Adet = tavan(debi/birim).
 
     Birim kapasite katalog degeridir [STANDART-TEYIT].
@@ -87,7 +95,9 @@ def hepa_sayisi(debi_m3h, birim_m3h=1000.0):
     return int(math.ceil(debi / birim))
 
 
-def isi_nem_yuku(debi_m3h, dt_k=5.0, dn_g_kg=2.0):
+def isi_nem_yuku(debi_m3h: Union[int, float],
+                 dt_k: float = 5.0,
+                 dn_g_kg: float = 2.0) -> tuple[float, float]:
     """Sicaklik ve nem kontrol yuku: (duyulur_kW, gizli_kW).
 
     Duyulur = rho*cp*Q*dT/3600; gizli = rho*Q*dn*h_fg/3600,
@@ -103,9 +113,12 @@ def isi_nem_yuku(debi_m3h, dt_k=5.0, dn_g_kg=2.0):
     return duy, giz
 
 
-def maco(onceki_gunluk_doz_mg, sonraki_gunluk_doz_mg,
-         parti_buyuklugu_kg, paylasilan_alan_m2=None,
-         guvenlik=1000.0, sonraki_parti_kg=None):
+def maco(onceki_gunluk_doz_mg: Union[int, float],
+         sonraki_gunluk_doz_mg: Union[int, float],
+         parti_buyuklugu_kg: Union[int, float],
+         paylasilan_alan_m2: Optional[Union[int, float]] = None,
+         guvenlik: float = 1000.0,
+         sonraki_parti_kg: Optional[Union[int, float]] = None) -> float:
     """MACO, mg. MACO = TDDa*MBS / (SF*TDDb).
 
     TDD: gunluk terapotik doz; MBS: sonraki parti buyuklugu (kg);
