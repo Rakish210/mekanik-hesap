@@ -5,12 +5,15 @@ Q = A*i/3600 (L/s). Yagis siddeti MGM/yerel idareden secilir
 [STANDART-TEYIT]. Cap tablosu pratik [STANDART-TEYIT].
 """
 
+from typing import Union
+
 # Debi araligi -> onerilen cap, mm [STANDART-TEYIT]
 CAP_TABLOSU = ((2.0, 75.0), (5.0, 110.0), (9.0, 125.0),
                (14.0, 160.0), (25.0, 200.0))
 
 
-def cati_debisi(alan_m2, yagis_mm_h=150.0):
+def cati_debisi(alan_m2: Union[int, float],
+                yagis_mm_h: float = 150.0) -> float:
     """Cati debisi, L/s. Q = A*i/3600."""
     alan, yagis = float(alan_m2), float(yagis_mm_h)
     if alan <= 0 or yagis <= 0:
@@ -18,7 +21,9 @@ def cati_debisi(alan_m2, yagis_mm_h=150.0):
     return alan * yagis / 3600.0
 
 
-def suzgec_dagilimi(alanlar_m2, yagis_mm_h=150.0):
+def suzgec_dagilimi(alanlar_m2: list[Union[int, float]],
+                    yagis_mm_h: float = 150.0
+                    ) -> list[tuple[float, float]]:
     """Suzgec basina dusen alan listesi -> [(alan, debi_Ls)].
 
     Her suzgec kendi toplama alanini drene eder; esit dagilim
@@ -32,7 +37,7 @@ def suzgec_dagilimi(alanlar_m2, yagis_mm_h=150.0):
     return dag
 
 
-def yagmur_boru_capi(debi_ls):
+def yagmur_boru_capi(debi_ls: Union[int, float]) -> float:
     """Debiye gore yagmur boru capi, mm [STANDART-TEYIT]."""
     debi = float(debi_ls)
     if debi <= 0:
@@ -43,7 +48,8 @@ def yagmur_boru_capi(debi_ls):
     return 250.0
 
 
-def ag_hesabi(alanlar_m2, yagis_mm_h=150.0):
+def ag_hesabi(alanlar_m2: list[Union[int, float]],
+              yagis_mm_h: float = 150.0) -> dict:
     """Boru agi -> {'branslar': [...], 'toplam_Ls': x, 'ana_cap': DN}.
 
     Branslar suzgec debileridir; ana kol toplam debiyi tasir.
