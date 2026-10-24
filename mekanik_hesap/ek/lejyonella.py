@@ -5,11 +5,15 @@ Skor agirliklari pratik [STANDART-TEYIT]; sahada su guvenlik
 plani esastir.
 """
 
+from typing import Union
+
 # Skor -> seviye esikleri [STANDART-TEYIT]
 SEVIYE = ((34, "dusuk"), (66, "orta"), (100, "yuksek"))
 
 
-def risk_skoru(sicaklik_c, bekleme_gun, dead_leg_m):
+def risk_skoru(sicaklik_c: Union[int, float],
+               bekleme_gun: Union[int, float],
+               dead_leg_m: Union[int, float]) -> tuple[float, str]:
     """Risk skoru -> (skor 0-100, seviye).
 
     Sicaklik: 25-45 C yuksek risk; <20 veya >60 dusuk.
@@ -42,7 +46,7 @@ def risk_skoru(sicaklik_c, bekleme_gun, dead_leg_m):
     return skor, "yuksek"
 
 
-def onlem_listesi(seviye):
+def onlem_listesi(seviye: str) -> list[str]:
     """Seviyeye gore onlem listesi (HTM 04-01 prensipleri)."""
     if str(seviye) not in ("dusuk", "orta", "yuksek"):
         raise ValueError("bilinmeyen seviye: %r" % (seviye,))
