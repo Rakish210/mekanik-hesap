@@ -8,7 +8,7 @@ Hu degeri esastir.
 from typing import Optional, Union
 
 # Hu: kWh birimi basina (m3 veya kg). [STANDART-TEYIT]
-YAKIT_HU = {
+YAKIT_HU: dict[str, dict[str, Union[float, str]]] = {
     "dogalgaz": {"hu": 9.64, "tuketim_birim": "m3/h"},
     "lpg": {"hu": 12.8, "tuketim_birim": "kg/h"},
     "motorin": {"hu": 11.86, "tuketim_birim": "kg/h"},
@@ -34,8 +34,8 @@ def saatlik_tuketim(guc_kw: Union[int, float],
     if hu_kwh is None:
         if str(yakit) not in YAKIT_HU:
             raise ValueError("bilinmeyen yakit: %r" % (yakit,))
-        hu = YAKIT_HU[str(yakit)]["hu"]
-        birim = YAKIT_HU[str(yakit)]["tuketim_birim"]
+        hu = float(YAKIT_HU[str(yakit)]["hu"])  # type: ignore[index]
+        birim = str(YAKIT_HU[str(yakit)]["tuketim_birim"])
     else:
         hu = float(hu_kwh)
         birim = "m3/h" if str(yakit) == "dogalgaz" else "kg/h"

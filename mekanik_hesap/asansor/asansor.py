@@ -21,7 +21,7 @@ def tip_secimi(kisi: Optional[Union[int, float]] = None,
     for kisi_t, yuk_t in _TIP:
         if kisi is not None and float(kisi) <= kisi_t:
             return float(kisi_t), float(yuk_t)
-        if kisi is None and float(yuk_kg) <= yuk_t:
+        if kisi is None and yuk_kg is not None and float(yuk_kg) <= yuk_t:
             return float(kisi_t), float(yuk_t)
     raise ValueError("kapasite tip dizisini asiyor")
 
