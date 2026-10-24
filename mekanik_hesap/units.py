@@ -22,8 +22,7 @@ _ENERGY = {"j": 1.0, "kj": 1000.0, "kwh": 3.6e6, "kcal": 4184.0}
 _TABLES = (_LENGTH, _PRESSURE, _FLOW, _POWER, _ENERGY)
 
 
-def convert(value: Union[int, float], from_unit: str,
-            to_unit: str) -> float:
+def convert(value: Union[int, float], from_unit: str, to_unit: str) -> float:
     """Degeri from_unit biriminden to_unit birimine cevirir.
 
     Ornek: convert(1000, "mm", "m") -> 1.0

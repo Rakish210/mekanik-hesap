@@ -9,14 +9,20 @@ from typing import Union
 
 # Mahal turu -> hedef NC [STANDART-TEYIT: TS ISO 3744, ASHRAE Handbook]
 NC_HEDEF = {
-    "yatak_odasi": 30, "hastane": 30, "konut": 30, "ofis": 35,
-    "sinif": 35, "toplanti": 35, "lokanta": 40, "avm": 40,
-    "spor": 45, "atolye": 50,
+    "yatak_odasi": 30,
+    "hastane": 30,
+    "konut": 30,
+    "ofis": 35,
+    "sinif": 35,
+    "toplanti": 35,
+    "lokanta": 40,
+    "avm": 40,
+    "spor": 45,
+    "atolye": 50,
 }
 
 
-def fan_guc_duzeyi(debi_m3h: Union[int, float],
-                   basinc_pa: Union[int, float]) -> float:
+def fan_guc_duzeyi(debi_m3h: Union[int, float], basinc_pa: Union[int, float]) -> float:
     """Fan ses guc duzeyi kestirimi, dBA.
 
     LwA = 10*log10(Q) + 20*log10(P) - 8 (Q: m3/h, P: Pa).
@@ -43,8 +49,9 @@ def kanal_degerlendirme(hiz_ms: Union[int, float]) -> tuple[str, str]:
     return "gurultulu", "yuksek hiz: kesit buyut veya susturucu"
 
 
-def nc_karsilastir(olculen_dba: Union[int, float],
-                   mahal: str = "ofis") -> tuple[int, bool, str]:
+def nc_karsilastir(
+    olculen_dba: Union[int, float], mahal: str = "ofis"
+) -> tuple[int, bool, str]:
     """Olculen dBA'yi mahal NC hedefine karsilastir.
 
     Yaklasik cevrim NC ~ dBA - 7 [STANDART-TEYIT: TS ISO 3744, ASHRAE Handbook].

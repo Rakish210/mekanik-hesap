@@ -1,11 +1,19 @@
 """yangin testleri."""
+
 import unittest
 
-from mekanik_hesap import yangin
 from mekanik_hesap.yangin import (
-    hazen_williams_kayip, sprinkler_debi, sprinkler_zon, dolap_debi,
-    hidrant_hatti, pompa_secimi, su_deposu, fm200, co2_miktar,
-    novec1230, kopuk_konsantresi,
+    hazen_williams_kayip,
+    sprinkler_debi,
+    sprinkler_zon,
+    dolap_debi,
+    hidrant_hatti,
+    pompa_secimi,
+    su_deposu,
+    fm200,
+    co2_miktar,
+    novec1230,
+    kopuk_konsantresi,
 )
 
 
@@ -47,10 +55,12 @@ class TestYangin(unittest.TestCase):
         self.assertAlmostEqual(v, 100.0 * 6.5 * 15.0 * 0.03)
 
     def test_errors(self):
-        for fn in (lambda: sprinkler_debi(0, 1.0),
-                   lambda: su_deposu(-5, 60.0),
-                   lambda: hidrant_hatti(0),
-                   lambda: co2_miktar(0)):
+        for fn in (
+            lambda: sprinkler_debi(0, 1.0),
+            lambda: su_deposu(-5, 60.0),
+            lambda: hidrant_hatti(0),
+            lambda: co2_miktar(0),
+        ):
             with self.assertRaises((ValueError, KeyError)):
                 fn()
 

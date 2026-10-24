@@ -1,16 +1,20 @@
 """Medikal gaz testleri (5 hesap)."""
+
 import unittest
 
 from mekanik_hesap.medikal import (
-    oksijen_debi, manifold_ihtiyaci, vakum_kapasitesi,
-    medikal_hava_debisi, medikal_boru_capi, zon_vana,
+    oksijen_debi,
+    manifold_ihtiyaci,
+    vakum_kapasitesi,
+    medikal_hava_debisi,
+    medikal_boru_capi,
+    zon_vana,
 )
 
 
 class TestMedikal(unittest.TestCase):
     def test_oksijen(self):
-        self.assertAlmostEqual(
-            oksijen_debi([(10, 10)], 0.3), 100 * 0.3)
+        self.assertAlmostEqual(oksijen_debi([(10, 10)], 0.3), 100 * 0.3)
 
     def test_manifold(self):
         top, adet = manifold_ihtiyaci(10.0, 7.0, 50.0, 200.0)
@@ -33,11 +37,13 @@ class TestMedikal(unittest.TestCase):
         self.assertEqual((priz, vana), (45, 3))
 
     def test_hatalar(self):
-        for fn in (lambda: oksijen_debi([(-1, 1)]),
-                   lambda: manifold_ihtiyaci(0),
-                   lambda: vakum_kapasitesi(0),
-                   lambda: medikal_hava_debisi(0),
-                   lambda: zon_vana(0)):
+        for fn in (
+            lambda: oksijen_debi([(-1, 1)]),
+            lambda: manifold_ihtiyaci(0),
+            lambda: vakum_kapasitesi(0),
+            lambda: medikal_hava_debisi(0),
+            lambda: zon_vana(0),
+        ):
             with self.assertRaises(ValueError):
                 fn()
 

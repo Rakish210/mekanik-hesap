@@ -7,8 +7,9 @@ from mekanik_hesap.hvac import isitma as I
 
 class TestIsitma(unittest.TestCase):
     def test_isi_kaybi(self):
-        top, ilet, hav = I.isi_kaybi_mahal([(0.5, 40.0), (2.5, 6.0)],
-                                            100.0, 0.5, 22.0, -3.0)
+        top, ilet, hav = I.isi_kaybi_mahal(
+            [(0.5, 40.0), (2.5, 6.0)], 100.0, 0.5, 22.0, -3.0
+        )
         self.assertAlmostEqual(ilet, 875.0)
         self.assertAlmostEqual(hav, 425.0)
         self.assertAlmostEqual(top, 1300.0)
@@ -50,28 +51,30 @@ class TestIsitma(unittest.TestCase):
         self.assertAlmostEqual(dp, bek)
 
     def test_balans_kv(self):
-        self.assertAlmostEqual(I.balans_kv(2.0, 0.1), 2.0 / 0.1 ** 0.5)
+        self.assertAlmostEqual(I.balans_kv(2.0, 0.1), 2.0 / 0.1**0.5)
 
     def test_uc_yollu(self):
         kvs, ok = I.uc_yollu_kvs(2.0, 0.1)
-        self.assertAlmostEqual(kvs, 2.0 / 0.1 ** 0.5)
+        self.assertAlmostEqual(kvs, 2.0 / 0.1**0.5)
         self.assertTrue(ok)
 
     def test_esanjor(self):
-        self.assertAlmostEqual(I.esanjor_kapasite(10.0, 80.0, 60.0),
-                               10.0 * 1.161 * 20.0)
+        self.assertAlmostEqual(
+            I.esanjor_kapasite(10.0, 80.0, 60.0), 10.0 * 1.161 * 20.0
+        )
 
     def test_lmtd(self):
-        self.assertAlmostEqual(I.lmtd(80.0, 60.0, 50.0, 40.0),
-                               10.0 / __import__("math").log(2.0))
+        self.assertAlmostEqual(
+            I.lmtd(80.0, 60.0, 50.0, 40.0), 10.0 / __import__("math").log(2.0)
+        )
 
     def test_yakit(self):
-        self.assertAlmostEqual(I.yakit_tuketimi(100.0, 34500.0, 0.9),
-                               100.0 * 3600.0 / (34500.0 * 0.9))
+        self.assertAlmostEqual(
+            I.yakit_tuketimi(100.0, 34500.0, 0.9), 100.0 * 3600.0 / (34500.0 * 0.9)
+        )
 
     def test_yalitim(self):
-        self.assertAlmostEqual(I.yalitim_kalinligi(0.4, 0.04),
-                               0.04 * (2.5 - 0.17))
+        self.assertAlmostEqual(I.yalitim_kalinligi(0.4, 0.04), 0.04 * (2.5 - 0.17))
 
     def test_zon_dagilim(self):
         top, oran, debi_oran = I.zon_debi_dagilimi([30.0, 70.0])

@@ -1,8 +1,12 @@
 """Ek: yagmur agi testleri."""
+
 import unittest
 
 from mekanik_hesap.ek.yagmur_3d import (
-    cati_debisi, suzgec_dagilimi, yagmur_boru_capi, ag_hesabi,
+    cati_debisi,
+    suzgec_dagilimi,
+    yagmur_boru_capi,
+    ag_hesabi,
 )
 
 

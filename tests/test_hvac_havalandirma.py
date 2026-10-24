@@ -19,8 +19,9 @@ class TestHavalandirma(unittest.TestCase):
         self.assertAlmostEqual(dp, (0.02 * 10.0 / 0.3 + 2.5) * 15.0)
 
     def test_fan(self):
-        self.assertAlmostEqual(H.fan_gucu(1000.0, 500.0, 0.6),
-                               1000.0 / 3600.0 * 500.0 / 0.6 / 1000.0)
+        self.assertAlmostEqual(
+            H.fan_gucu(1000.0, 500.0, 0.6), 1000.0 / 3600.0 * 500.0 / 0.6 / 1000.0
+        )
 
     def test_duman(self):
         self.assertAlmostEqual(H.duman_zonu(100.0, 3.0), 1800.0)

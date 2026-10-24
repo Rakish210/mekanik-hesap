@@ -1,8 +1,12 @@
 """Ek: yakit tuketimi testleri."""
+
 import unittest
 
 from mekanik_hesap.ek.yakit_tuketim import (
-    YAKIT_HU, saatlik_tuketim, gunluk_tuketim, sezonluk_tuketim,
+    YAKIT_HU,
+    saatlik_tuketim,
+    gunluk_tuketim,
+    sezonluk_tuketim,
 )
 
 
@@ -22,11 +26,13 @@ class TestYakit(unittest.TestCase):
         self.assertAlmostEqual(sezonluk_tuketim(80, 150, 0.8), 9600.0)
 
     def test_hatalar(self):
-        for fn in (lambda: saatlik_tuketim(0, 0.9),
-                   lambda: saatlik_tuketim(10, 1.5),
-                   lambda: saatlik_tuketim(10, 0.9, yakit="bilinmez"),
-                   lambda: gunluk_tuketim(10, 0),
-                   lambda: sezonluk_tuketim(10, -5)):
+        for fn in (
+            lambda: saatlik_tuketim(0, 0.9),
+            lambda: saatlik_tuketim(10, 1.5),
+            lambda: saatlik_tuketim(10, 0.9, yakit="bilinmez"),
+            lambda: gunluk_tuketim(10, 0),
+            lambda: sezonluk_tuketim(10, -5),
+        ):
             with self.assertRaises(ValueError):
                 fn()
 

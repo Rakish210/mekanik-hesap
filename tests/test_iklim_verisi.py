@@ -1,9 +1,12 @@
 """iklim_verisi testleri."""
+
 import unittest
 
-from mekanik_hesap import iklim_verisi
 from mekanik_hesap.iklim_verisi import (
-    sehirler, tasarim_sicakligi, kis_tasarim, yaz_tasarim,
+    sehirler,
+    tasarim_sicakligi,
+    kis_tasarim,
+    yaz_tasarim,
 )
 
 

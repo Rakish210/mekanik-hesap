@@ -1,18 +1,28 @@
 """Sihhi tesisat testleri (13 hesap)."""
+
 import unittest
 
 from mekanik_hesap.su.sihhi import (
-    cihaz_toplam_debi, temiz_su_boru_capi, hidrofor, su_deposu,
-    pis_su_boru_cap, yagmur_suyu, yag_tutucu, fosseptik, dalgic_pompa,
-    sicak_su_sirkulasyon, boyler, yumusatma, basinc_dusurucu_kademe,
+    cihaz_toplam_debi,
+    temiz_su_boru_capi,
+    hidrofor,
+    su_deposu,
+    pis_su_boru_cap,
+    yagmur_suyu,
+    yag_tutucu,
+    fosseptik,
+    dalgic_pompa,
+    sicak_su_sirkulasyon,
+    boyler,
+    yumusatma,
+    basinc_dusurucu_kademe,
     bahce_sulama,
 )
 
 
 class TestSihhi(unittest.TestCase):
     def test_cihaz(self):
-        self.assertAlmostEqual(
-            cihaz_toplam_debi([("lavabo", 2), ("klozet", 1)]), 0.35)
+        self.assertAlmostEqual(cihaz_toplam_debi([("lavabo", 2), ("klozet", 1)]), 0.35)
         with self.assertRaises(ValueError):
             cihaz_toplam_debi([("bilinmez", 1)])
 
@@ -65,8 +75,11 @@ class TestSihhi(unittest.TestCase):
         self.assertAlmostEqual(zon, 1.25)
 
     def test_hatalar(self):
-        for fn in (lambda: su_deposu(0), lambda: yagmur_suyu(-1),
-                   lambda: fosseptik(-2)):
+        for fn in (
+            lambda: su_deposu(0),
+            lambda: yagmur_suyu(-1),
+            lambda: fosseptik(-2),
+        ):
             with self.assertRaises(ValueError):
                 fn()
 

@@ -25,8 +25,7 @@ RHO_HAVA = 1.2
 CP_HAVA = 1.005
 
 
-def ach_debi(hacim_m3: Union[int, float],
-             ach: Union[int, float]) -> float:
+def ach_debi(hacim_m3: Union[int, float], ach: Union[int, float]) -> float:
     """Besleme debisi, m3/h. Q = V*ACH."""
     v, n = float(hacim_m3), float(ach)
     if v <= 0 or n <= 0:
@@ -34,8 +33,7 @@ def ach_debi(hacim_m3: Union[int, float],
     return v * n
 
 
-def sinif_debisi(hacim_m3: Union[int, float],
-                 iso_sinif: str = "ISO7") -> float:
+def sinif_debisi(hacim_m3: Union[int, float], iso_sinif: str = "ISO7") -> float:
     """Sinifa gore besleme debisi, m3/h. ACH tablosu pratik
     [STANDART-TEYIT: ISO 14644-1/2/4]."""
     if iso_sinif not in ACH_TABLOSU:
@@ -43,8 +41,7 @@ def sinif_debisi(hacim_m3: Union[int, float],
     return ach_debi(hacim_m3, ACH_TABLOSU[iso_sinif])
 
 
-def iso_ust_limit(sinif_n: Union[int, float],
-                  partikul_um: float = 0.5) -> float:
+def iso_ust_limit(sinif_n: Union[int, float], partikul_um: float = 0.5) -> float:
     """ISO 14644-1 ust limit konsantrasyonu, parcacik/m3.
 
     Cn = 10^N * (0.1/D)^2.08; D mikrometre, 0.1<=D<=5.
@@ -53,7 +50,7 @@ def iso_ust_limit(sinif_n: Union[int, float],
     d = float(partikul_um)
     if not (1 <= n <= 9) or not (0.1 <= d <= 5.0):
         raise ValueError("sinif 1-9, cap 0.1-5 um olmali")
-    return (10.0 ** n) * ((0.1 / d) ** 2.08)
+    return (10.0**n) * ((0.1 / d) ** 2.08)
 
 
 def ornek_nokta(alan_m2: Union[int, float]) -> int:
@@ -67,10 +64,12 @@ def ornek_nokta(alan_m2: Union[int, float]) -> int:
     return int(math.ceil(math.sqrt(a)))
 
 
-def basinc_kacak_debi(aciklik_m2: Union[int, float],
-                      dp_pa: float = 12.5,
-                      rho: float = RHO_HAVA,
-                      cd: float = 0.65) -> float:
+def basinc_kacak_debi(
+    aciklik_m2: Union[int, float],
+    dp_pa: float = 12.5,
+    rho: float = RHO_HAVA,
+    cd: float = 0.65,
+) -> float:
     """Fark basincta kacis debisi, m3/h. Q = Cd*A*kok(2 dp/rho).
 
     Basinc kademesi (or. 10-15 Pa) ve Cd pratik kabul
@@ -83,8 +82,7 @@ def basinc_kacak_debi(aciklik_m2: Union[int, float],
     return q * 3600.0
 
 
-def hepa_sayisi(debi_m3h: Union[int, float],
-                birim_m3h: float = 1000.0) -> int:
+def hepa_sayisi(debi_m3h: Union[int, float], birim_m3h: float = 1000.0) -> int:
     """HEPA filtre adedi. Adet = tavan(debi/birim).
 
     Birim kapasite katalog degeridir [STANDART-TEYIT: ISO 14644-1/2/4].
@@ -95,9 +93,9 @@ def hepa_sayisi(debi_m3h: Union[int, float],
     return int(math.ceil(debi / birim))
 
 
-def isi_nem_yuku(debi_m3h: Union[int, float],
-                 dt_k: float = 5.0,
-                 dn_g_kg: float = 2.0) -> tuple[float, float]:
+def isi_nem_yuku(
+    debi_m3h: Union[int, float], dt_k: float = 5.0, dn_g_kg: float = 2.0
+) -> tuple[float, float]:
     """Sicaklik ve nem kontrol yuku: (duyulur_kW, gizli_kW).
 
     Duyulur = rho*cp*Q*dT/3600; gizli = rho*Q*dn*h_fg/3600,
@@ -113,12 +111,14 @@ def isi_nem_yuku(debi_m3h: Union[int, float],
     return duy, giz
 
 
-def maco(onceki_gunluk_doz_mg: Union[int, float],
-         sonraki_gunluk_doz_mg: Union[int, float],
-         parti_buyuklugu_kg: Union[int, float],
-         paylasilan_alan_m2: Optional[Union[int, float]] = None,
-         guvenlik: float = 1000.0,
-         sonraki_parti_kg: Optional[Union[int, float]] = None) -> float:
+def maco(
+    onceki_gunluk_doz_mg: Union[int, float],
+    sonraki_gunluk_doz_mg: Union[int, float],
+    parti_buyuklugu_kg: Union[int, float],
+    paylasilan_alan_m2: Optional[Union[int, float]] = None,
+    guvenlik: float = 1000.0,
+    sonraki_parti_kg: Optional[Union[int, float]] = None,
+) -> float:
     """MACO, mg. MACO = TDDa*MBS / (SF*TDDb).
 
     TDD: gunluk terapotik doz; MBS: sonraki parti buyuklugu (kg);
@@ -127,8 +127,7 @@ def maco(onceki_gunluk_doz_mg: Union[int, float],
     """
     tdda = float(onceki_gunluk_doz_mg)
     tddb = float(sonraki_gunluk_doz_mg)
-    mbs = float(parti_buyuklugu_kg if sonraki_parti_kg is None
-                else sonraki_parti_kg)
+    mbs = float(parti_buyuklugu_kg if sonraki_parti_kg is None else sonraki_parti_kg)
     sf = float(guvenlik)
     if tdda <= 0 or tddb <= 0 or mbs <= 0 or sf <= 0:
         raise ValueError("girisler pozitif olmali")

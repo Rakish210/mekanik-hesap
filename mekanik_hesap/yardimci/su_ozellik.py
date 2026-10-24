@@ -9,7 +9,10 @@ Sicaklik araligi 4-100 C.
 from typing import Union
 
 from mekanik_hesap.water import (
-    density, dyn_viscosity, kin_viscosity, sat_pressure,
+    density,
+    dyn_viscosity,
+    kin_viscosity,
+    sat_pressure,
 )
 
 

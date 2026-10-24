@@ -22,8 +22,7 @@ def sehirler() -> list[str]:
     return sorted(SEHIRLER)
 
 
-def tasarim_sicakligi(sehir: str
-                      ) -> tuple[Union[int, float], Union[int, float], str]:
+def tasarim_sicakligi(sehir: str) -> tuple[Union[int, float], Union[int, float], str]:
     """(kis_C, yaz_C, kaynak_not) doner. Bilinmeyen sehir KeyError."""
     ad = str(sehir).strip().lower()
     if ad not in SEHIRLER:

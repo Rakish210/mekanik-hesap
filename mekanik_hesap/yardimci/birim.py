@@ -10,8 +10,7 @@ from typing import Union
 from mekanik_hesap.units import convert, c_to_k, k_to_c
 
 
-def birim_cevir(deger: Union[int, float], kaynak_birim: str,
-                hedef_birim: str) -> float:
+def birim_cevir(deger: Union[int, float], kaynak_birim: str, hedef_birim: str) -> float:
     """Birim cevirir. Ornek: birim_cevir(1000, "mm", "m") -> 1.0.
 
     Gecerli birimler: mm/cm/m/km, pa/kpa/bar/mbar/mmhg/mss,

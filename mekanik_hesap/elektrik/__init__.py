@@ -17,25 +17,35 @@ from typing import Optional, Union
 # IEC 60364-5-52 tablo B.52.2 esasli pratik dizi [STANDART-TEYIT: TS HD 60364, IEC 60364];
 # doseme sekli/duzeltme katsayisi projede teyit edilir.
 _KESIT_AKIM = (
-    (1.5, 15.5), (2.5, 21.0), (4.0, 28.0), (6.0, 36.0),
-    (10.0, 50.0), (16.0, 66.0), (25.0, 84.0), (35.0, 104.0),
-    (50.0, 125.0), (70.0, 160.0), (95.0, 200.0), (120.0, 230.0),
-    (150.0, 260.0), (185.0, 300.0), (240.0, 350.0),
+    (1.5, 15.5),
+    (2.5, 21.0),
+    (4.0, 28.0),
+    (6.0, 36.0),
+    (10.0, 50.0),
+    (16.0, 66.0),
+    (25.0, 84.0),
+    (35.0, 104.0),
+    (50.0, 125.0),
+    (70.0, 160.0),
+    (95.0, 200.0),
+    (120.0, 230.0),
+    (150.0, 260.0),
+    (185.0, 300.0),
+    (240.0, 350.0),
 )
 
 # Sigorta/salter anma akim dizisi, A (pratik pano dizisi).
-_ANMA = (6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160,
-         200, 250, 400, 630)
+_ANMA = (6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200, 250, 400, 630)
 
 # Trafo standart guc dizisi, kVA.
-_TRAFO = (25, 50, 100, 160, 250, 400, 630, 800, 1000, 1250, 1600,
-          2000, 2500)
+_TRAFO = (25, 50, 100, 160, 250, 400, 630, 800, 1000, 1250, 1600, 2000, 2500)
 
 _BAKIR_RHO = 0.0178  # ohm.mm2/m (20 C pratik)
 
 
-def yuk_akimi(guc_w: float, gerilim_v: float = 400.0,
-              faz: int = 3, cosfi: float = 0.8) -> float:
+def yuk_akimi(
+    guc_w: float, gerilim_v: float = 400.0, faz: int = 3, cosfi: float = 0.8
+) -> float:
     """Yuk akimi, A. 1 faz: I=P/(U cos); 3 faz: I=P/(kok3 U cos).
 
     Guc donusumleri ve akim-sigorta bagintisi IEC 60364 esaslidir.
@@ -52,11 +62,12 @@ def yuk_akimi(guc_w: float, gerilim_v: float = 400.0,
     raise ValueError("faz 1 veya 3 olmali")
 
 
-def guc_ucgeni(p_kw: Optional[float] = None,
-               s_kva: Optional[float] = None,
-               q_kvar: Optional[float] = None,
-               cosfi: Optional[float] = None
-               ) -> tuple[float, float, float, float]:
+def guc_ucgeni(
+    p_kw: Optional[float] = None,
+    s_kva: Optional[float] = None,
+    q_kvar: Optional[float] = None,
+    cosfi: Optional[float] = None,
+) -> tuple[float, float, float, float]:
     """Aktif/gorunur/reaktif guc donusumu: (P_kW, S_kVA, Q_kVAr, cosfi).
 
     Verilen ikiden digerleri bulunur: S=kok(P2+Q2), cos=P/S.
@@ -116,9 +127,14 @@ def kablo_kesit(akim_a: float) -> float:
     raise ValueError("akim tablo araligini asiyor")
 
 
-def gerilim_dusumu(akim_a: float, uzunluk_m: float,
-                   kesit_mm2: float, gerilim_v: float = 400.0,
-                   faz: int = 3, cosfi: float = 0.8) -> float:
+def gerilim_dusumu(
+    akim_a: float,
+    uzunluk_m: float,
+    kesit_mm2: float,
+    gerilim_v: float = 400.0,
+    faz: int = 3,
+    cosfi: float = 0.8,
+) -> float:
     """Gerilim dusumu, %. Tek faz: 2 rho L I cos/S; 3 faz: kok3 ...
 
     IEC 60364-5-52 ek G esasli pratik baginti [STANDART-TEYIT: TS HD 60364, IEC 60364];
@@ -143,8 +159,7 @@ def gerilim_dusumu(akim_a: float, uzunluk_m: float,
     return du / u * 100.0
 
 
-def sigorta_secimi(yuk_akim_a: float,
-                   tasima_akim_a: Optional[float] = None) -> float:
+def sigorta_secimi(yuk_akim_a: float, tasima_akim_a: Optional[float] = None) -> float:
     """Sigorta/salter secimi, A. Ib <= In sarti + standart dizi.
 
     IEC 60364-4-43 (Ib <= In <= Iz) esaslidir; Iz verilirse
@@ -169,16 +184,22 @@ def kacak_akim(kullanim: str = "priz") -> float:
     priz/isitici devresi: 30; ana dagitim/yangin koruma: 300.
     Tip (AC/A/F/B) yuk tipine gore secilir [STANDART-TEYIT: TS HD 60364, IEC 60364].
     """
-    tablo = {"priz": 30.0, "aydinlatma": 30.0, "ana": 300.0,
-             "yangin": 300.0, "santiye": 30.0}
+    tablo = {
+        "priz": 30.0,
+        "aydinlatma": 30.0,
+        "ana": 300.0,
+        "yangin": 300.0,
+        "santiye": 30.0,
+    }
     key = str(kullanim).lower()
     if key not in tablo:
         raise ValueError("kullanim priz/aydinlatma/ana/yangin/santiye olmali")
     return tablo[key]
 
 
-def topraklama_cubugu(zemin_ohm_m: float, boy_m: float = 3.0,
-                      cap_mm: float = 16.0) -> float:
+def topraklama_cubugu(
+    zemin_ohm_m: float, boy_m: float = 3.0, cap_mm: float = 16.0
+) -> float:
     """Tek topraklama cubugu direnci, ohm. R=rho/(2 pi L) ln(4L/d).
 
     IEC 60364-5-54 esasli klasik baginti; zemin ozdirenci olcumle
@@ -192,8 +213,7 @@ def topraklama_cubugu(zemin_ohm_m: float, boy_m: float = 3.0,
     return rho / (2.0 * math.pi * l_m) * math.log(4.0 * l_m / d)
 
 
-def topraklama_elektrot(tek_direnc_ohm: float,
-                        hedef_ohm: float = 10.0) -> int:
+def topraklama_elektrot(tek_direnc_ohm: float, hedef_ohm: float = 10.0) -> int:
     """Topraklama elektrot sayisi, adet. n=tavan(Rtek/Rhedef).
 
     Paralel verim katsayisi ihmal edilmistir (pratik onsecim);
@@ -206,8 +226,7 @@ def topraklama_elektrot(tek_direnc_ohm: float,
     return int(math.ceil(r / hedef))
 
 
-def paratoner_yaricap(yukseklik_m: float,
-                      kure_m: float = 45.0) -> float:
+def paratoner_yaricap(yukseklik_m: float, kure_m: float = 45.0) -> float:
     """Paratoner (yuvarlanan kure) koruma yaricapi, m.
 
     Rp=kok(2Rh-h2). Kure yaricapi koruma sinifina gore secilir
@@ -220,9 +239,13 @@ def paratoner_yaricap(yukseklik_m: float,
     return math.sqrt(2.0 * r * h - h * h)
 
 
-def aydinlatma_armatur(alan_m2: float, lux: float,
-                       lamba_lumen: float, kullanim: float = 0.6,
-                       bakim: float = 0.8) -> int:
+def aydinlatma_armatur(
+    alan_m2: float,
+    lux: float,
+    lamba_lumen: float,
+    kullanim: float = 0.6,
+    bakim: float = 0.8,
+) -> int:
     """Aydinlatma armatur sayisi, adet. N=E A/(F UF MF).
 
     Aydinlik duzeyi TS EN 12464-1 tablosundan secilir
@@ -240,8 +263,7 @@ def aydinlatma_armatur(alan_m2: float, lux: float,
     return int(math.ceil(e * a / (f * uf * mf)))
 
 
-def kompanzasyon(p_kw: float, cos_mevcut: float,
-                cos_hedef: float = 0.95) -> float:
+def kompanzasyon(p_kw: float, cos_mevcut: float, cos_hedef: float = 0.95) -> float:
     """Kompanzasyon gucu, kVAr. Qc=P(tan1-tan2). IEC 60831 esasli.
 
     Hedef guc katsayisi dagitim sirketi sartina gore secilir
@@ -260,9 +282,12 @@ def kompanzasyon(p_kw: float, cos_mevcut: float,
     return p * (t1 - t2)
 
 
-def jenerator_gucu(kurulu_kw: float, eszaman: float = 0.7,
-                   cosfi: float = 0.8,
-                   kalkis_payi: float = 1.25) -> float:
+def jenerator_gucu(
+    kurulu_kw: float,
+    eszaman: float = 0.7,
+    cosfi: float = 0.8,
+    kalkis_payi: float = 1.25,
+) -> float:
     """Jenerator gucu, kVA. S=P esz k/cos.
 
     Eszamanlilik ve motor kalkis payi pratik kabul
@@ -279,9 +304,13 @@ def jenerator_gucu(kurulu_kw: float, eszaman: float = 0.7,
     return p * esz * pay / cosf
 
 
-def ups_secimi(yuk_va: float, otonomi_dk: float = 15.0,
-               verim: float = 0.9, aku_v: float = 12.0,
-               hucre: float = 32.0) -> tuple[float, float]:
+def ups_secimi(
+    yuk_va: float,
+    otonomi_dk: float = 15.0,
+    verim: float = 0.9,
+    aku_v: float = 12.0,
+    hucre: float = 32.0,
+) -> tuple[float, float]:
     """UPS ve aku: (ups_kVA, aku_Ah). UPS bir ust %25 payla secilir;
     aku Ah=S t/(V hucre verim)*1000/60 pratik bagintidir
     [STANDART-TEYIT: TS HD 60364, IEC 60364]; aku yaslanma payi projede eklenir.
@@ -316,8 +345,7 @@ def trafo_gucu(kurulu_kva: float, talep: float = 0.7) -> float:
     raise ValueError("guc trafo dizisini asiyor")
 
 
-def salter_ayari(trafo_kva: float,
-                 gerilim_v: float = 400.0) -> float:
+def salter_ayari(trafo_kva: float, gerilim_v: float = 400.0) -> float:
     """Trafo AG ana salter akimi, A. In=tavan(S/(kok3 U)) standart dizi.
 
     IEC 60364-4-43 esasli pratik onsecim; ayarlanabilir acma egrisi
@@ -334,8 +362,7 @@ def salter_ayari(trafo_kva: float,
     raise ValueError("akim salter dizisini asiyor")
 
 
-def busbar_kesit(akim_a: float,
-                 yogunluk_a_mm2: float = 1.5) -> float:
+def busbar_kesit(akim_a: float, yogunluk_a_mm2: float = 1.5) -> float:
     """Busbar kesiti, mm2. S=I/J. Bakir bara akim yogunlugu pratik
     kabul [STANDART-TEYIT: TS HD 60364, IEC 60364]; kisa devre dayanimi projede teyit edilir.
     """
@@ -346,8 +373,7 @@ def busbar_kesit(akim_a: float,
     return i / j
 
 
-def bakir_agirlik(kesit_mm2: float, uzunluk_m: float,
-                  damar: int = 3) -> float:
+def bakir_agirlik(kesit_mm2: float, uzunluk_m: float, damar: int = 3) -> float:
     """Kablo bakir agirligi, kg. m=kesit L damar 8.96/1000.
 
     Kesif/metraj pratigidir [STANDART-TEYIT: TS HD 60364, IEC 60364].
@@ -360,10 +386,12 @@ def bakir_agirlik(kesit_mm2: float, uzunluk_m: float,
     return s * l_m * n * 8.96 / 1000.0
 
 
-def tava_doluluk(kablo_caplar_mm: list[float],
-                 tava_mm: float = 300.0,
-                 yukseklik_mm: float = 60.0,
-                 sinir: float = 0.4) -> float:
+def tava_doluluk(
+    kablo_caplar_mm: list[float],
+    tava_mm: float = 300.0,
+    yukseklik_mm: float = 60.0,
+    sinir: float = 0.4,
+) -> float:
     """Kablo tavasi doluluk orani, %. Doluluk=kablo alani/tava alani.
 
     %40 sinir IEC 61537 esasli pratik kabul [STANDART-TEYIT: TS HD 60364, IEC 60364].
@@ -394,8 +422,7 @@ def dedektor_sayisi(alan_m2: float, tip: str = "duman") -> int:
     return int(math.ceil(a / tablo[key]))
 
 
-def yangin_zon(alan_m2: float,
-               zon_max_m2: float = 2000.0) -> int:
+def yangin_zon(alan_m2: float, zon_max_m2: float = 2000.0) -> int:
     """Yangin alarm zon sayisi, adet. Zon alani EN 54-14 esasli
     pratik (2000 m2) [STANDART-TEYIT: TS HD 60364, IEC 60364]."""
     a = float(alan_m2)
@@ -405,9 +432,9 @@ def yangin_zon(alan_m2: float,
     return int(math.ceil(a / z))
 
 
-def acil_aydinlatma(alan_m2: float, lux: float = 1.0,
-                    armatur_lumen: float = 300.0,
-                    sure_h: float = 3.0) -> tuple[int, float]:
+def acil_aydinlatma(
+    alan_m2: float, lux: float = 1.0, armatur_lumen: float = 300.0, sure_h: float = 3.0
+) -> tuple[int, float]:
     """Acil aydinlatma: (armatur_adet, aku_sure_h).
 
     Aydinlik EN 1838 esasli pratik (kacis hatti 1 lx)
@@ -422,10 +449,13 @@ def acil_aydinlatma(alan_m2: float, lux: float = 1.0,
     return int(math.ceil(e * a / f)), sure
 
 
-def motor_yol_verme(guc_kw: float, gerilim_v: float = 400.0,
-                    cosfi: float = 0.85, verim: float = 0.9,
-                    tip: str = "dogrudan"
-                    ) -> tuple[float, float]:
+def motor_yol_verme(
+    guc_kw: float,
+    gerilim_v: float = 400.0,
+    cosfi: float = 0.85,
+    verim: float = 0.9,
+    tip: str = "dogrudan",
+) -> tuple[float, float]:
     """Motor yol verme: (anma_A, kalkis_A). Kalkis katsayisi: dogrudan
     7, yildiz-ucgen 2.5, soft-starter 3.5, surucu 1.5 pratik kabul
     [STANDART-TEYIT: TS HD 60364, IEC 60364]; IEC 60947-4-1 kontaktor secimi projede teyit edilir.
@@ -436,8 +466,7 @@ def motor_yol_verme(guc_kw: float, gerilim_v: float = 400.0,
         raise ValueError("guc ve gerilim pozitif olmali")
     if not (0 < float(cosfi) <= 1.0) or not (0 < float(verim) <= 1.0):
         raise ValueError("cosfi ve verim (0,1] araliginda olmali")
-    katsayi = {"dogrudan": 7.0, "yildiz-ucgen": 2.5, "soft": 3.5,
-               "surucu": 1.5}
+    katsayi = {"dogrudan": 7.0, "yildiz-ucgen": 2.5, "soft": 3.5, "surucu": 1.5}
     key = str(tip).lower()
     if key not in katsayi:
         raise ValueError("tip dogrudan/yildiz-ucgen/soft/surucu olmali")
@@ -460,16 +489,23 @@ def es_potansiyel(ana_kesit_mm2: float) -> float:
 def data_limit(protokol: str = "ethernet") -> float:
     """Data hatti uzunluk siniri, m. EN 50173 esasli pratik tablo
     [STANDART-TEYIT: TS HD 60364, IEC 60364]; kablo sinifi projede teyit edilir."""
-    tablo = {"ethernet": 100.0, "rs485": 1200.0, "usb2": 5.0,
-             "hdmi": 15.0, "fiber": 2000.0, "knx": 1000.0}
+    tablo = {
+        "ethernet": 100.0,
+        "rs485": 1200.0,
+        "usb2": 5.0,
+        "hdmi": 15.0,
+        "fiber": 2000.0,
+        "knx": 1000.0,
+    }
     key = str(protokol).lower()
     if key not in tablo:
         raise ValueError("protokol ethernet/rs485/usb2/hdmi/fiber/knx olmali")
     return tablo[key]
 
 
-def pano_isi(kayip_w: float, debi_m3h: Optional[float] = None,
-             dt_k: float = 10.0) -> tuple[float, float]:
+def pano_isi(
+    kayip_w: float, debi_m3h: Optional[float] = None, dt_k: float = 10.0
+) -> tuple[float, float]:
     """Pano isi yuku ve fan: (kW, gerekli_debi_m3h).
 
     Q=P/(rho cp dT)*3600; rho=1.2, cp=1.005. dT pratik kabul
@@ -485,8 +521,9 @@ def pano_isi(kayip_w: float, debi_m3h: Optional[float] = None,
     return p / 1000.0, debi
 
 
-def talep_guc(kalemler_kw: Union[float, list[float]],
-              eszaman: float = 0.7) -> tuple[float, float]:
+def talep_guc(
+    kalemler_kw: Union[float, list[float]], eszaman: float = 0.7
+) -> tuple[float, float]:
     """Talep guc, kW. Talep=kurulu*eszaman.
 
     Eszamanlilik katsayisi yuk tipine gore secilir, pratik kabul
@@ -505,8 +542,7 @@ def talep_guc(kalemler_kw: Union[float, list[float]],
     return kurulu, kurulu * esz
 
 
-def enerji_tuketim(guc_kw: float, sure_h: float,
-                   adet: float = 1) -> float:
+def enerji_tuketim(guc_kw: float, sure_h: float, adet: float = 1) -> float:
     """Enerji tuketimi, kWh. E=P t n (kesif/fatura onhesabi)."""
     p = float(guc_kw)
     t = float(sure_h)

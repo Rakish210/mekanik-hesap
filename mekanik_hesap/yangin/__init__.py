@@ -10,17 +10,19 @@ yazilir, standart uydurulmaz.
 """
 
 import math
-from typing import Optional, Union
+from typing import Union
 
 # Hazen-Williams puruzluluk katsayisi, celik boru pratik kabul
 # (TS EN 12845 hidrolik hesap eki esasli pratik).
 C_CELIK = 120.0
 
 
-def hazen_williams_kayip(uzunluk_m: Union[int, float],
-                         debi_m3h: Union[int, float],
-                         cap_mm: Union[int, float],
-                         c: float = C_CELIK) -> float:
+def hazen_williams_kayip(
+    uzunluk_m: Union[int, float],
+    debi_m3h: Union[int, float],
+    cap_mm: Union[int, float],
+    c: float = C_CELIK,
+) -> float:
     """Hazen-Williams boru kaybi, mSS.
 
     hf = 10.67*L*Q^1.852 / (C^1.852*D^4.871); Q m3/s, D m.
@@ -31,11 +33,10 @@ def hazen_williams_kayip(uzunluk_m: Union[int, float],
         raise ValueError("girisler gecerli olmali")
     q = float(debi_m3h) / 3600.0
     d = cap / 1000.0
-    return 10.67 * l_m * q ** 1.852 / (c ** 1.852 * d ** 4.871)
+    return 10.67 * l_m * q**1.852 / (c**1.852 * d**4.871)
 
 
-def sprinkler_debi(k_faktor: Union[int, float],
-                   basinc_bar: Union[int, float]) -> float:
+def sprinkler_debi(k_faktor: Union[int, float], basinc_bar: Union[int, float]) -> float:
     """Tek sprinkler debisi, L/dk. q = K*kok(p) (TS EN 12845).
 
     K metrik: L/dk/bar^0.5 (or. K80, K115).
@@ -46,11 +47,12 @@ def sprinkler_debi(k_faktor: Union[int, float],
     return k * math.sqrt(p)
 
 
-def sprinkler_zon(zon_alani_m2: Union[int, float],
-                  yogunluk_mm_dk: Union[int, float],
-                  k_faktor: Union[int, float] = 80.0,
-                  basinc_bar: Union[int, float] = 1.0
-                  ) -> tuple[float, int]:
+def sprinkler_zon(
+    zon_alani_m2: Union[int, float],
+    yogunluk_mm_dk: Union[int, float],
+    k_faktor: Union[int, float] = 80.0,
+    basinc_bar: Union[int, float] = 1.0,
+) -> tuple[float, int]:
     """Islak/kuru boru zon hesabi: (zon_debi_Ldk, sprinkler_sayisi).
 
     Debi = alan * tasarim yogunlugu; sprinkler sayisi debi / tekil
@@ -66,8 +68,9 @@ def sprinkler_zon(zon_alani_m2: Union[int, float],
     return zon_debi, int(math.ceil(zon_debi / tekil))
 
 
-def dolap_debi(dolap_adet: int, birim_debi_ldk: float = 100.0,
-               es_zaman: int = 2) -> float:
+def dolap_debi(
+    dolap_adet: int, birim_debi_ldk: float = 100.0, es_zaman: int = 2
+) -> float:
     """Yangin dolabi debisi, L/dk. TS EN 671 esasli pratik.
 
     Birim debi ve es zamanli dolap sayisi pratik kabul
@@ -81,12 +84,14 @@ def dolap_debi(dolap_adet: int, birim_debi_ldk: float = 100.0,
     return aktif * float(birim_debi_ldk)
 
 
-def hidrant_hatti(hidrant_adet: int,
-                  birim_debi_ldk: float = 1900.0 / 12,
-                  uzunluk_m: Union[int, float] = 100.0,
-                  cap_mm: Union[int, float] = 100.0,
-                  statik_mss: float = 10.0,
-                  artik_mss: float = 70.0) -> tuple[float, float]:
+def hidrant_hatti(
+    hidrant_adet: int,
+    birim_debi_ldk: float = 1900.0 / 12,
+    uzunluk_m: Union[int, float] = 100.0,
+    cap_mm: Union[int, float] = 100.0,
+    statik_mss: float = 10.0,
+    artik_mss: float = 70.0,
+) -> tuple[float, float]:
     """Hidrant hatti: (toplam_debi_Ldk, pompa_basinci_mSS).
 
     Birim debi ve artik basinc BYKHY m.95 esasli pratik kabul
@@ -101,10 +106,9 @@ def hidrant_hatti(hidrant_adet: int,
     return toplam, basinc
 
 
-def pompa_secimi(debi_m3h: Union[int, float],
-                 basinc_mss: Union[int, float],
-                 jokey_oran: float = 0.01
-                 ) -> tuple[float, float, float]:
+def pompa_secimi(
+    debi_m3h: Union[int, float], basinc_mss: Union[int, float], jokey_oran: float = 0.01
+) -> tuple[float, float, float]:
     """Yangin pompasi: (ana_debi_m3h, ana_basinc_mSS, jokey_debi_m3h).
 
     Ana pompa debi+basinci aynen; jokey pompa ~%1 debi, ayni basinc
@@ -118,8 +122,7 @@ def pompa_secimi(debi_m3h: Union[int, float],
     return debi, basinc, debi * oran
 
 
-def su_deposu(debi_m3h: Union[int, float],
-              sure_dk: float = 60.0) -> float:
+def su_deposu(debi_m3h: Union[int, float], sure_dk: float = 60.0) -> float:
     """Yangin su deposu (rezerv) hacmi, m3. V = Q*t.
 
     Sure kabulu projeye/BYKHY'a gore secilir [STANDART-TEYIT: TS EN 12845, TS EN 671].
@@ -130,9 +133,11 @@ def su_deposu(debi_m3h: Union[int, float],
     return debi * sure / 60.0
 
 
-def _gazli_miktar(hacim_m3: Union[int, float],
-                  konsantrasyon: Union[int, float],
-                  ozgul_hacim: Union[int, float]) -> float:
+def _gazli_miktar(
+    hacim_m3: Union[int, float],
+    konsantrasyon: Union[int, float],
+    ozgul_hacim: Union[int, float],
+) -> float:
     """Genel toplam basma gazli sondurme bagintisi, kg.
 
     W = V*C / (S*(100-C)). Konsantrasyon ve ozgul hacim
@@ -147,11 +152,13 @@ def _gazli_miktar(hacim_m3: Union[int, float],
     return v * c / (s * (100.0 - c))
 
 
-def fm200(hacim_m3: Union[int, float],
-          konsantrasyon: float = 8.7,
-          ozgul_hacim: float = 0.1373,
-          nozul_kapsama_m2: float = 30.0,
-          alan_m2: float = 0.0) -> tuple[float, int]:
+def fm200(
+    hacim_m3: Union[int, float],
+    konsantrasyon: float = 8.7,
+    ozgul_hacim: float = 0.1373,
+    nozul_kapsama_m2: float = 30.0,
+    alan_m2: float = 0.0,
+) -> tuple[float, int]:
     """FM200 (HFC-227ea) miktari: (kg, nozul_adet). TS EN 15004-5.
 
     Konsantrasyon ve nozul kapsama alani proje/CPD degeridir
@@ -166,8 +173,7 @@ def fm200(hacim_m3: Union[int, float],
     return miktar, int(math.ceil(alan / float(nozul_kapsama_m2)))
 
 
-def co2_miktar(hacim_m3: Union[int, float],
-               faktor_kg_m3: float = 1.2) -> float:
+def co2_miktar(hacim_m3: Union[int, float], faktor_kg_m3: float = 1.2) -> float:
     """CO2 sondurme miktari, kg. Toplam basma pratik faktor
     [STANDART-TEYIT: TS EN 12845, TS EN 671]; yuksek/alcak basinc secimi projeye aittir."""
     v, f = float(hacim_m3), float(faktor_kg_m3)
@@ -176,9 +182,9 @@ def co2_miktar(hacim_m3: Union[int, float],
     return v * f
 
 
-def novec1230(hacim_m3: Union[int, float],
-              konsantrasyon: float = 5.6,
-              ozgul_hacim: float = 0.0733) -> float:
+def novec1230(
+    hacim_m3: Union[int, float], konsantrasyon: float = 5.6, ozgul_hacim: float = 0.0733
+) -> float:
     """Novec 1230 (FK-5-1-12) miktari, kg. TS EN 15004-2.
 
     Konsantrasyon proje/CPD degeridir [STANDART-TEYIT: TS EN 12845, TS EN 671].
@@ -186,10 +192,12 @@ def novec1230(hacim_m3: Union[int, float],
     return _gazli_miktar(hacim_m3, konsantrasyon, ozgul_hacim)
 
 
-def kopuk_konsantresi(alan_m2: Union[int, float],
-                      uygulama_ldk_m2: float = 6.5,
-                      sure_dk: float = 15.0,
-                      oran: float = 0.03) -> float:
+def kopuk_konsantresi(
+    alan_m2: Union[int, float],
+    uygulama_ldk_m2: float = 6.5,
+    sure_dk: float = 15.0,
+    oran: float = 0.03,
+) -> float:
     """Kopuk konsantresi miktari, L. V = A*q*t*oran.
 
     Uygulama yogunlugu, sure ve karisim orani tehlike sinifina gore

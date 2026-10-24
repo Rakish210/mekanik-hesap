@@ -1,4 +1,5 @@
 """Ek: lejyonella testleri."""
+
 import unittest
 
 from mekanik_hesap.ek.lejyonella import risk_skoru, onlem_listesi
@@ -18,8 +19,7 @@ class TestLejyonella(unittest.TestCase):
         self.assertEqual(seviye, "orta")
 
     def test_onlem(self):
-        self.assertGreater(len(onlem_listesi("yuksek")),
-                          len(onlem_listesi("dusuk")))
+        self.assertGreater(len(onlem_listesi("yuksek")), len(onlem_listesi("dusuk")))
         with self.assertRaises(ValueError):
             onlem_listesi("bilinmez")
         with self.assertRaises(ValueError):

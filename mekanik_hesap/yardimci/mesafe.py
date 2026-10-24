@@ -34,9 +34,12 @@ def sehirler() -> list[str]:
     return sorted(SEHIR_KOORD)
 
 
-def kus_ucusu_km(enlem1: Union[int, float], boylam1: Union[int, float],
-                 enlem2: Union[int, float],
-                 boylam2: Union[int, float]) -> float:
+def kus_ucusu_km(
+    enlem1: Union[int, float],
+    boylam1: Union[int, float],
+    enlem2: Union[int, float],
+    boylam2: Union[int, float],
+) -> float:
     """Iki koordinat arasi kus ucusu, km (Haversine)."""
     la1, lo1 = math.radians(float(enlem1)), math.radians(float(boylam1))
     la2, lo2 = math.radians(float(enlem2)), math.radians(float(boylam2))
@@ -44,13 +47,16 @@ def kus_ucusu_km(enlem1: Union[int, float], boylam1: Union[int, float],
         if not math.isfinite(v):
             raise ValueError("koordinatlar sayi olmali")
     dlat, dlon = la2 - la1, lo2 - lo1
-    a = (math.sin(dlat / 2.0) ** 2 + math.cos(la1) * math.cos(la2)
-         * math.sin(dlon / 2.0) ** 2)
+    a = (
+        math.sin(dlat / 2.0) ** 2
+        + math.cos(la1) * math.cos(la2) * math.sin(dlon / 2.0) ** 2
+    )
     return 2.0 * _R * math.asin(math.sqrt(max(0.0, min(1.0, a))))
 
 
-def sehir_mesafesi(sehir1: str, sehir2: str,
-                   yol_katsayi: float = YOL_KATSAYI) -> tuple[float, float]:
+def sehir_mesafesi(
+    sehir1: str, sehir2: str, yol_katsayi: float = YOL_KATSAYI
+) -> tuple[float, float]:
     """Iki kayitli sehir arasi: (kus_ucusu_km, yol_km).
 
     Bilinmeyen sehir KeyError verir [SEHIR-TEYIT].
@@ -68,8 +74,7 @@ def sehir_mesafesi(sehir1: str, sehir2: str,
     return kus, kus * k
 
 
-def yol_mesafesi(kus_km: Union[int, float],
-                 yol_katsayi: float = YOL_KATSAYI) -> float:
+def yol_mesafesi(kus_km: Union[int, float], yol_katsayi: float = YOL_KATSAYI) -> float:
     """Kus ucusundan yol mesafesi, km. yol = kus * katsayi."""
     kus, k = float(kus_km), float(yol_katsayi)
     if kus < 0 or k <= 0:
@@ -77,8 +82,7 @@ def yol_mesafesi(kus_km: Union[int, float],
     return kus * k
 
 
-def seyahat_suresi(mesafe_km: Union[int, float],
-                   hiz_kmh: float = 90.0) -> float:
+def seyahat_suresi(mesafe_km: Union[int, float], hiz_kmh: float = 90.0) -> float:
     """Seyahat suresi, saat. sure = mesafe / hiz."""
     m, h = float(mesafe_km), float(hiz_kmh)
     if m < 0 or h <= 0:

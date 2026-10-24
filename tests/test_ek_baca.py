@@ -1,4 +1,5 @@
 """Ek: baca cekisi testleri."""
+
 import unittest
 
 from mekanik_hesap.ek.baca_cekis import cekis, yogusma_kontrol, baca_capi
@@ -25,8 +26,7 @@ class TestBaca(unittest.TestCase):
             baca_capi(-1)
 
     def test_hatalar(self):
-        for fn in (lambda: cekis(0, 180, 0),
-                   lambda: cekis(10, 10, 20)):
+        for fn in (lambda: cekis(0, 180, 0), lambda: cekis(10, 10, 20)):
             with self.assertRaises(ValueError):
                 fn()
 

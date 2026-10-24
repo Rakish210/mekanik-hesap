@@ -1,23 +1,45 @@
 """Elektrik arayuz testleri (KATALOG.md 14. baslik, 20 hesap)."""
+
 import math
 import unittest
 
 from mekanik_hesap.elektrik import (
-    yuk_akimi, guc_ucgeni, kablo_kesit, gerilim_dusumu, sigorta_secimi,
-    kacak_akim, topraklama_cubugu, topraklama_elektrot, paratoner_yaricap,
-    aydinlatma_armatur, kompanzasyon, jenerator_gucu, ups_secimi,
-    trafo_gucu, salter_ayari, busbar_kesit, bakir_agirlik, tava_doluluk,
-    dedektor_sayisi, yangin_zon, acil_aydinlatma, motor_yol_verme,
-    es_potansiyel, data_limit, pano_isi, talep_guc, enerji_tuketim,
+    yuk_akimi,
+    guc_ucgeni,
+    kablo_kesit,
+    gerilim_dusumu,
+    sigorta_secimi,
+    kacak_akim,
+    topraklama_cubugu,
+    topraklama_elektrot,
+    paratoner_yaricap,
+    aydinlatma_armatur,
+    kompanzasyon,
+    jenerator_gucu,
+    ups_secimi,
+    trafo_gucu,
+    salter_ayari,
+    busbar_kesit,
+    bakir_agirlik,
+    tava_doluluk,
+    dedektor_sayisi,
+    yangin_zon,
+    acil_aydinlatma,
+    motor_yol_verme,
+    es_potansiyel,
+    data_limit,
+    pano_isi,
+    talep_guc,
+    enerji_tuketim,
 )
 
 
 class TestElektrik(unittest.TestCase):
     def test_yuk_akimi(self):
-        self.assertAlmostEqual(yuk_akimi(8000, 400, 3, 0.8),
-                               8000 / (math.sqrt(3) * 400 * 0.8))
-        self.assertAlmostEqual(yuk_akimi(2000, 230, 1, 0.9),
-                               2000 / (230 * 0.9))
+        self.assertAlmostEqual(
+            yuk_akimi(8000, 400, 3, 0.8), 8000 / (math.sqrt(3) * 400 * 0.8)
+        )
+        self.assertAlmostEqual(yuk_akimi(2000, 230, 1, 0.9), 2000 / (230 * 0.9))
         with self.assertRaises(ValueError):
             yuk_akimi(1000, 400, 2)
 
@@ -64,14 +86,15 @@ class TestElektrik(unittest.TestCase):
             topraklama_cubugu(-5)
 
     def test_paratoner(self):
-        self.assertAlmostEqual(paratoner_yaricap(10, 45),
-                               math.sqrt(2 * 45 * 10 - 100))
+        self.assertAlmostEqual(paratoner_yaricap(10, 45), math.sqrt(2 * 45 * 10 - 100))
         with self.assertRaises(ValueError):
             paratoner_yaricap(50, 45)
 
     def test_aydinlatma(self):
-        self.assertEqual(aydinlatma_armatur(100, 500, 4000, 0.6, 0.8),
-                         math.ceil(500 * 100 / (4000 * 0.48)))
+        self.assertEqual(
+            aydinlatma_armatur(100, 500, 4000, 0.6, 0.8),
+            math.ceil(500 * 100 / (4000 * 0.48)),
+        )
         with self.assertRaises(ValueError):
             aydinlatma_armatur(0, 500, 4000)
 
@@ -84,8 +107,9 @@ class TestElektrik(unittest.TestCase):
             kompanzasyon(100, 0.95, 0.7)
 
     def test_jenerator(self):
-        self.assertAlmostEqual(jenerator_gucu(200, 0.7, 0.8, 1.25),
-                               200 * 0.7 * 1.25 / 0.8)
+        self.assertAlmostEqual(
+            jenerator_gucu(200, 0.7, 0.8, 1.25), 200 * 0.7 * 1.25 / 0.8
+        )
         with self.assertRaises(ValueError):
             jenerator_gucu(200, 1.5)
 
@@ -98,15 +122,13 @@ class TestElektrik(unittest.TestCase):
 
     def test_trafo_salter(self):
         self.assertEqual(trafo_gucu(1000, 0.7), 800.0)
-        self.assertEqual(salter_ayari(400),
-                         630.0)  # 400kVA ~577A -> 630
+        self.assertEqual(salter_ayari(400), 630.0)  # 400kVA ~577A -> 630
         with self.assertRaises(ValueError):
             trafo_gucu(100000, 1.0)
 
     def test_busbar_bakir(self):
         self.assertAlmostEqual(busbar_kesit(300, 1.5), 200.0)
-        self.assertAlmostEqual(bakir_agirlik(95, 100, 3),
-                               95 * 100 * 3 * 8.96 / 1000)
+        self.assertAlmostEqual(bakir_agirlik(95, 100, 3), 95 * 100 * 3 * 8.96 / 1000)
         with self.assertRaises(ValueError):
             busbar_kesit(-10)
 

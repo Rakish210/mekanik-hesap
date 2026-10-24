@@ -1,10 +1,16 @@
 """gaz (FAZ 4 ekleri) testleri."""
+
 import unittest
 
-from mekanik_hesap import gaz, gas
+from mekanik_hesap import gas
 from mekanik_hesap.gaz import (
-    gaz_yogunlugu, basinc_kaybi, boru_capi, sayac_secimi,
-    havalandirma_menfezi, baca_kesiti, alarm_zonu,
+    gaz_yogunlugu,
+    basinc_kaybi,
+    boru_capi,
+    sayac_secimi,
+    havalandirma_menfezi,
+    baca_kesiti,
+    alarm_zonu,
 )
 
 
@@ -23,6 +29,7 @@ class TestGaz(unittest.TestCase):
         self.assertEqual(boru_capi(10.0, 21.0), 25.0)
         # Secilen cap hiz sinirini saglamali (gas.hbk_hiz ile tutarli)
         from mekanik_hesap.gas import hbk_hiz
+
         cap = boru_capi(10.0, 21.0)
         p_bar = (1013.25 + 21.0) / 1000.0
         self.assertLessEqual(hbk_hiz(10.0, p_bar, cap), 6.0)
@@ -47,11 +54,13 @@ class TestGaz(unittest.TestCase):
         self.assertAlmostEqual(gas.havalandirma_menfezi(24.0), 72.0)
 
     def test_errors(self):
-        for fn in (lambda: gaz_yogunlugu(0),
-                   lambda: basinc_kaybi(20.0, 10.0, 0, 21.0),
-                   lambda: boru_capi(-1, 21.0),
-                   lambda: havalandirma_menfezi(0),
-                   lambda: alarm_zonu(0)):
+        for fn in (
+            lambda: gaz_yogunlugu(0),
+            lambda: basinc_kaybi(20.0, 10.0, 0, 21.0),
+            lambda: boru_capi(-1, 21.0),
+            lambda: havalandirma_menfezi(0),
+            lambda: alarm_zonu(0),
+        ):
             with self.assertRaises(ValueError):
                 fn()
 

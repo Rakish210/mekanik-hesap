@@ -1,8 +1,11 @@
 """Ek: gurultu testleri."""
+
 import unittest
 
 from mekanik_hesap.ek.gurultu import (
-    fan_guc_duzeyi, kanal_degerlendirme, nc_karsilastir,
+    fan_guc_duzeyi,
+    kanal_degerlendirme,
+    nc_karsilastir,
 )
 
 

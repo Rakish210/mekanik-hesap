@@ -12,8 +12,9 @@ from typing import Optional, Union
 _TIP: list[tuple[int, int]] = [(4, 320), (6, 450), (8, 630), (10, 800), (13, 1000)]
 
 
-def tip_secimi(kisi: Optional[Union[int, float]] = None,
-               yuk_kg: Optional[Union[int, float]] = None) -> tuple[float, float]:
+def tip_secimi(
+    kisi: Optional[Union[int, float]] = None, yuk_kg: Optional[Union[int, float]] = None
+) -> tuple[float, float]:
     """Kabin tipi: (kisi, yuk_kg). Kisi veya yukten bir ust tipe
     yuvarlanir. Olcu detaylari katalogdan secilir."""
     if kisi is None and yuk_kg is None:
@@ -26,9 +27,13 @@ def tip_secimi(kisi: Optional[Union[int, float]] = None,
     raise ValueError("kapasite tip dizisini asiyor")
 
 
-def sefer_suresi(kat: int, kat_arasi_m: float, hiz_ms: float,
-                 kapi_sure_s: float = 10.0,
-                 durak_sayisi: Optional[Union[int, float]] = None) -> float:
+def sefer_suresi(
+    kat: int,
+    kat_arasi_m: float,
+    hiz_ms: float,
+    kapi_sure_s: float = 10.0,
+    durak_sayisi: Optional[Union[int, float]] = None,
+) -> float:
     """Tek sefer suresi (RTT), s. RTT = 2*H/v + durak*kapi.
 
     H: toplam seyir yuksekligi; durak verilmezse 2*kat/3 pratik
@@ -44,8 +49,9 @@ def sefer_suresi(kat: int, kat_arasi_m: float, hiz_ms: float,
     return 2.0 * h_m / v_ms + durak * tkapi
 
 
-def tasiyabilirlik(kabin_kisi: float, sefer_sure_s: float,
-                   doluluk: float = 0.7) -> float:
+def tasiyabilirlik(
+    kabin_kisi: float, sefer_sure_s: float, doluluk: float = 0.7
+) -> float:
     """5 dk tasiyabilirlik, kisi. P = kabin*doluluk*300/RTT.
     Pratik doluluk kabulu [STANDART-TEYIT: TS EN 81-20/50, TS EN ISO 4190-1]."""
     kab = float(kabin_kisi)

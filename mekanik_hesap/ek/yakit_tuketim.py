@@ -18,11 +18,12 @@ YAKIT_HU: dict[str, dict[str, Union[float, str]]] = {
 }
 
 
-def saatlik_tuketim(guc_kw: Union[int, float],
-                     verim: Union[int, float],
-                     yakit: str = "dogalgaz",
-                     hu_kwh: Optional[Union[int, float]] = None
-                     ) -> tuple[float, str]:
+def saatlik_tuketim(
+    guc_kw: Union[int, float],
+    verim: Union[int, float],
+    yakit: str = "dogalgaz",
+    hu_kwh: Optional[Union[int, float]] = None,
+) -> tuple[float, str]:
     """Saatlik yakit tuketimi -> (tuketim, birim).
 
     guc_kw: faydali isi gucu; verim: 0-1; hu_kwh: ozel Hu
@@ -44,8 +45,9 @@ def saatlik_tuketim(guc_kw: Union[int, float],
     return p / eta / hu, birim
 
 
-def gunluk_tuketim(saatlik: Union[int, float],
-                   calisma_saat: Union[int, float]) -> float:
+def gunluk_tuketim(
+    saatlik: Union[int, float], calisma_saat: Union[int, float]
+) -> float:
     """Gunluk tuketim = saatlik * calisma saati."""
     b, t = float(saatlik), float(calisma_saat)
     if b < 0 or t <= 0:
@@ -53,9 +55,9 @@ def gunluk_tuketim(saatlik: Union[int, float],
     return b * t
 
 
-def sezonluk_tuketim(gunluk: Union[int, float],
-                     gun: Union[int, float],
-                     es_zaman: float = 1.0) -> float:
+def sezonluk_tuketim(
+    gunluk: Union[int, float], gun: Union[int, float], es_zaman: float = 1.0
+) -> float:
     """Sezonluk tuketim = gunluk * gun * es_zamanlilik."""
     g, n, e = float(gunluk), float(gun), float(es_zaman)
     if g < 0 or n <= 0 or not (0 < e <= 1.0):

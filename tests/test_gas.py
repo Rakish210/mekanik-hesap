@@ -1,8 +1,13 @@
 """gas testleri (KLV degerleriyle karsilastirma)."""
+
 import unittest
 
 from mekanik_hesap.gas import (
-    ttt_toplam, hbk_hiz, isil_genlesme, konsol_pmax, konsol_guvenli_mi,
+    ttt_toplam,
+    hbk_hiz,
+    isil_genlesme,
+    konsol_pmax,
+    konsol_guvenli_mi,
 )
 
 

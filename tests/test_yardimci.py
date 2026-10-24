@@ -1,9 +1,15 @@
 """Yardimci hesaplar (7 hesap) testleri."""
+
 import math
 import unittest
 
 from mekanik_hesap.yardimci import (
-    birim, surtunme, su_ozellik, hesap_makinesi, mmo_bedel, mesafe,
+    birim,
+    surtunme,
+    su_ozellik,
+    hesap_makinesi,
+    mmo_bedel,
+    mesafe,
     bep_karbon,
 )
 from mekanik_hesap import units, colebrook, water
@@ -30,14 +36,11 @@ class TestSurtunme(unittest.TestCase):
             surtunme.reynolds_sayisi(1000.0, 1.0, 0.1, 0.001), 100000.0
         )
         f_h = colebrook.haaland(100000.0, 0.000045, 0.1)
-        self.assertAlmostEqual(
-            surtunme.haaland_faktoru(100000.0, 0.000045, 0.1), f_h
-        )
+        self.assertAlmostEqual(surtunme.haaland_faktoru(100000.0, 0.000045, 0.1), f_h)
         self.assertAlmostEqual(
             surtunme.surtunme_faktoru(100000.0, 0.000045, 0.1), f_h, places=3
         )
-        self.assertAlmostEqual(surtunme.surtunme_faktoru(1000.0, 0.0, 0.1),
-                               0.064)
+        self.assertAlmostEqual(surtunme.surtunme_faktoru(1000.0, 0.0, 0.1), 0.064)
 
     def test_darcy(self):
         dp = surtunme.darcy_kayip(0.02, 100.0, 0.1, 1000.0, 1.0)
@@ -51,12 +54,15 @@ class TestSurtunme(unittest.TestCase):
 class TestSuOzellik(unittest.TestCase):
     def test_sarmalama(self):
         self.assertAlmostEqual(su_ozellik.su_yogunlugu(20), water.density(20))
-        self.assertAlmostEqual(su_ozellik.su_dinamik_viskozite(20),
-                               water.dyn_viscosity(20))
-        self.assertAlmostEqual(su_ozellik.su_kinematik_viskozite(20),
-                               water.kin_viscosity(20))
-        self.assertAlmostEqual(su_ozellik.su_doyma_basinci(100),
-                               water.sat_pressure(100), places=1)
+        self.assertAlmostEqual(
+            su_ozellik.su_dinamik_viskozite(20), water.dyn_viscosity(20)
+        )
+        self.assertAlmostEqual(
+            su_ozellik.su_kinematik_viskozite(20), water.kin_viscosity(20)
+        )
+        self.assertAlmostEqual(
+            su_ozellik.su_doyma_basinci(100), water.sat_pressure(100), places=1
+        )
 
     def test_hatalar(self):
         with self.assertRaises(ValueError):
@@ -83,9 +89,14 @@ class TestHesapMakinesi(unittest.TestCase):
 
     def test_hatalar(self):
         m = hesap_makinesi
-        for fn in (lambda: m.kok(-1), lambda: m.log10(0),
-                   lambda: m.ln(-2), lambda: m.faktoriyel(-1),
-                   lambda: m.faktoriyel(2.5), lambda: m.yuzde(1, 0)):
+        for fn in (
+            lambda: m.kok(-1),
+            lambda: m.log10(0),
+            lambda: m.ln(-2),
+            lambda: m.faktoriyel(-1),
+            lambda: m.faktoriyel(2.5),
+            lambda: m.yuzde(1, 0),
+        ):
             with self.assertRaises(ValueError):
                 fn()
 
@@ -100,11 +111,13 @@ class TestMmoBedel(unittest.TestCase):
         self.assertAlmostEqual(mmo_bedel.birim_alana_bedel(50000, 1000), 50.0)
 
     def test_hatalar(self):
-        for fn in (lambda: mmo_bedel.proje_bedeli(0, 50),
-                   lambda: mmo_bedel.proje_bedeli(100, 50, sinif="bilinmez"),
-                   lambda: mmo_bedel.proje_bedeli(100, 50, katsayi=0),
-                   lambda: mmo_bedel.kdv_dahil(-5),
-                   lambda: mmo_bedel.birim_alana_bedel(100, 0)):
+        for fn in (
+            lambda: mmo_bedel.proje_bedeli(0, 50),
+            lambda: mmo_bedel.proje_bedeli(100, 50, sinif="bilinmez"),
+            lambda: mmo_bedel.proje_bedeli(100, 50, katsayi=0),
+            lambda: mmo_bedel.kdv_dahil(-5),
+            lambda: mmo_bedel.birim_alana_bedel(100, 0),
+        ):
             with self.assertRaises(ValueError):
                 fn()
 
@@ -113,8 +126,7 @@ class TestMesafe(unittest.TestCase):
     def test_kus_ucusu(self):
         d = mesafe.kus_ucusu_km(41.0, 29.0, 39.9, 32.8)
         self.assertTrue(300 < d < 450, d)  # istanbul-ankara olcegi
-        self.assertAlmostEqual(mesafe.kus_ucusu_km(41.0, 29.0, 41.0, 29.0),
-                               0.0)
+        self.assertAlmostEqual(mesafe.kus_ucusu_km(41.0, 29.0, 41.0, 29.0), 0.0)
 
     def test_sehir_yol_sure(self):
         kus, yol = mesafe.sehir_mesafesi("istanbul", "ankara")
@@ -125,35 +137,34 @@ class TestMesafe(unittest.TestCase):
     def test_hatalar(self):
         with self.assertRaises(KeyError):
             mesafe.sehir_mesafesi("istanbul", "bilinmez")
-        for fn in (lambda: mesafe.yol_mesafesi(-1),
-                   lambda: mesafe.seyahat_suresi(100, 0),
-                   lambda: mesafe.sehir_mesafesi("istanbul", "ankara",
-                                                 yol_katsayi=0)):
+        for fn in (
+            lambda: mesafe.yol_mesafesi(-1),
+            lambda: mesafe.seyahat_suresi(100, 0),
+            lambda: mesafe.sehir_mesafesi("istanbul", "ankara", yol_katsayi=0),
+        ):
             with self.assertRaises(ValueError):
                 fn()
 
 
 class TestBepKarbon(unittest.TestCase):
     def test_emisyon(self):
-        self.assertAlmostEqual(bep_karbon.karbon_emisyon(1000, "dogalgaz"),
-                               202.0)
-        self.assertAlmostEqual(bep_karbon.birincil_enerji(1000, "elektrik"),
-                               2360.0)
+        self.assertAlmostEqual(bep_karbon.karbon_emisyon(1000, "dogalgaz"), 202.0)
+        self.assertAlmostEqual(bep_karbon.birincil_enerji(1000, "elektrik"), 2360.0)
         self.assertAlmostEqual(
-            bep_karbon.toplam_emisyon([("dogalgaz", 1000),
-                                       ("elektrik", 1000)]),
+            bep_karbon.toplam_emisyon([("dogalgaz", 1000), ("elektrik", 1000)]),
             202.0 + 440.0,
         )
-        self.assertAlmostEqual(bep_karbon.birim_alan_gosterge(202.0, 100),
-                               2.02)
+        self.assertAlmostEqual(bep_karbon.birim_alan_gosterge(202.0, 100), 2.02)
 
     def test_hatalar(self):
-        for fn in (lambda: bep_karbon.karbon_emisyon(-5),
-                   lambda: bep_karbon.karbon_emisyon(10, yakit="bilinmez"),
-                   lambda: bep_karbon.birincil_enerji(10, yakit="bilinmez"),
-                   lambda: bep_karbon.birincil_enerji(10, cevrim=0),
-                   lambda: bep_karbon.karbon_emisyon(10, faktor=-1),
-                   lambda: bep_karbon.birim_alan_gosterge(10, 0)):
+        for fn in (
+            lambda: bep_karbon.karbon_emisyon(-5),
+            lambda: bep_karbon.karbon_emisyon(10, yakit="bilinmez"),
+            lambda: bep_karbon.birincil_enerji(10, yakit="bilinmez"),
+            lambda: bep_karbon.birincil_enerji(10, cevrim=0),
+            lambda: bep_karbon.karbon_emisyon(10, faktor=-1),
+            lambda: bep_karbon.birim_alan_gosterge(10, 0),
+        ):
             with self.assertRaises(ValueError):
                 fn()
 

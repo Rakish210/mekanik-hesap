@@ -27,9 +27,11 @@ def yakitlar() -> list[str]:
     return sorted(YAKIT_KATSAYI)
 
 
-def birincil_enerji(tuketim_kwh: Union[int, float],
-                    yakit: str = "dogalgaz",
-                    cevrim: Optional[Union[int, float]] = None) -> float:
+def birincil_enerji(
+    tuketim_kwh: Union[int, float],
+    yakit: str = "dogalgaz",
+    cevrim: Optional[Union[int, float]] = None,
+) -> float:
     """Birincil enerji, kWh. tuketim * cevrim_katsayi.
 
     cevrim verilirse tablo yerine kullanilir.
@@ -49,9 +51,11 @@ def birincil_enerji(tuketim_kwh: Union[int, float],
     return t * k
 
 
-def karbon_emisyon(tuketim_kwh: Union[int, float],
-                   yakit: str = "dogalgaz",
-                   faktor: Optional[Union[int, float]] = None) -> float:
+def karbon_emisyon(
+    tuketim_kwh: Union[int, float],
+    yakit: str = "dogalgaz",
+    faktor: Optional[Union[int, float]] = None,
+) -> float:
     """Karbon emisyonu, kgCO2. tuketim_kWh * faktor."""
     t = float(tuketim_kwh)
     if t < 0:
@@ -76,8 +80,7 @@ def toplam_emisyon(kalemler_kwh: list[tuple[str, Union[int, float]]]) -> float:
     return toplam
 
 
-def birim_alan_gosterge(deger: Union[int, float],
-                        alan_m2: Union[int, float]) -> float:
+def birim_alan_gosterge(deger: Union[int, float], alan_m2: Union[int, float]) -> float:
     """m2 basina gosterge: deger / alan (kWh/m2 veya kgCO2/m2)."""
     d, a = float(deger), float(alan_m2)
     if d < 0 or a <= 0:

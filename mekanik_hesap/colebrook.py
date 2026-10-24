@@ -8,8 +8,12 @@ import math
 from typing import Union
 
 
-def reynolds(rho: Union[int, float], V: Union[int, float],
-             D: Union[int, float], mu: Union[int, float]) -> float:
+def reynolds(
+    rho: Union[int, float],
+    V: Union[int, float],
+    D: Union[int, float],
+    mu: Union[int, float],
+) -> float:
     """Reynolds sayisi: rho (kg/m3), V (m/s), D (m), mu (Pa.s)."""
     rho, V, D, mu = float(rho), float(V), float(D), float(mu)
     if D <= 0 or mu <= 0:
@@ -17,8 +21,9 @@ def reynolds(rho: Union[int, float], V: Union[int, float],
     return rho * V * D / mu
 
 
-def haaland(Re: Union[int, float], eps: Union[int, float],
-            D: Union[int, float]) -> float:
+def haaland(
+    Re: Union[int, float], eps: Union[int, float], D: Union[int, float]
+) -> float:
     """Haaland acik formu. Turbulansli akis (Re >= 2300) ister."""
     Re, eps, D = float(Re), float(eps), float(D)
     if Re < 2300 or D <= 0 or eps < 0:
@@ -27,9 +32,13 @@ def haaland(Re: Union[int, float], eps: Union[int, float],
     return (1.0 / (-1.8 * math.log10(term))) ** 2
 
 
-def colebrook(Re: Union[int, float], eps: Union[int, float],
-              D: Union[int, float], tol: float = 1e-8,
-              max_iter: int = 50) -> float:
+def colebrook(
+    Re: Union[int, float],
+    eps: Union[int, float],
+    D: Union[int, float],
+    tol: float = 1e-8,
+    max_iter: int = 50,
+) -> float:
     """Colebrook-White cozumu (Haaland baslangicli iterasyon).
 
     Re < 2300 icin laminer baginti (64/Re) doner.

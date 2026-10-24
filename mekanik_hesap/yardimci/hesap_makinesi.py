@@ -9,14 +9,12 @@ import math
 from typing import Union
 
 
-def us_al(taban: Union[int, float],
-          us: Union[int, float]) -> float:
+def us_al(taban: Union[int, float], us: Union[int, float]) -> float:
     """Ust alma: taban**us."""
     return float(taban) ** float(us)
 
 
-def kok(deger: Union[int, float],
-       derece: Union[int, float] = 2.0) -> float:
+def kok(deger: Union[int, float], derece: Union[int, float] = 2.0) -> float:
     """n. dereceden kok. deger >= 0, derece > 0 olmali."""
     x, n = float(deger), float(derece)
     if x < 0 or n <= 0:
@@ -68,8 +66,7 @@ def faktoriyel(n: Union[int, float]) -> float:
     return float(math.factorial(k))
 
 
-def yuzde(parca: Union[int, float],
-          butun: Union[int, float]) -> float:
+def yuzde(parca: Union[int, float], butun: Union[int, float]) -> float:
     """Yuzde: parca/butun*100. butun sifir olamaz."""
     p, b = float(parca), float(butun)
     if b == 0:
@@ -77,8 +74,7 @@ def yuzde(parca: Union[int, float],
     return p / b * 100.0
 
 
-def hipotenus(a: Union[int, float],
-              b: Union[int, float]) -> float:
+def hipotenus(a: Union[int, float], b: Union[int, float]) -> float:
     """Dik kenarlardan hipotenus: kok(a2+b2)."""
     return math.hypot(float(a), float(b))
 

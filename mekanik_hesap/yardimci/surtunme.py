@@ -11,31 +11,38 @@ from typing import Union
 from mekanik_hesap.colebrook import reynolds, haaland, colebrook
 
 
-def reynolds_sayisi(rho: Union[int, float], hiz_ms: Union[int, float],
-                    cap_m: Union[int, float],
-                    mu: Union[int, float]) -> float:
+def reynolds_sayisi(
+    rho: Union[int, float],
+    hiz_ms: Union[int, float],
+    cap_m: Union[int, float],
+    mu: Union[int, float],
+) -> float:
     """Reynolds sayisi: rho (kg/m3), hiz (m/s), cap (m), mu (Pa.s)."""
     return reynolds(rho, hiz_ms, cap_m, mu)
 
 
-def surtunme_faktoru(Re: Union[int, float],
-                     puruzluluk_m: Union[int, float],
-                     cap_m: Union[int, float]) -> float:
+def surtunme_faktoru(
+    Re: Union[int, float], puruzluluk_m: Union[int, float], cap_m: Union[int, float]
+) -> float:
     """Surtunme faktoru. Re < 2300 laminer (64/Re), aksi halde
     Colebrook-White cozumudur."""
     return colebrook(Re, puruzluluk_m, cap_m)
 
 
-def haaland_faktoru(Re: Union[int, float],
-                    puruzluluk_m: Union[int, float],
-                    cap_m: Union[int, float]) -> float:
+def haaland_faktoru(
+    Re: Union[int, float], puruzluluk_m: Union[int, float], cap_m: Union[int, float]
+) -> float:
     """Haaland acik formu. Turbulansli akis (Re >= 2300) ister."""
     return haaland(Re, puruzluluk_m, cap_m)
 
 
-def darcy_kayip(f: Union[int, float], uzunluk_m: Union[int, float],
-                cap_m: Union[int, float], rho: Union[int, float],
-                hiz_ms: Union[int, float]) -> float:
+def darcy_kayip(
+    f: Union[int, float],
+    uzunluk_m: Union[int, float],
+    cap_m: Union[int, float],
+    rho: Union[int, float],
+    hiz_ms: Union[int, float],
+) -> float:
     """Darcy-Weisbach basin kaybi, Pa. dp = f*(L/D)*rho*V^2/2."""
     ff, l_m, d = float(f), float(uzunluk_m), float(cap_m)
     r, v = float(rho), float(hiz_ms)

@@ -1,8 +1,11 @@
 """Asansor testleri (2 hesap + tasiyabilirlik)."""
+
 import unittest
 
 from mekanik_hesap.asansor.asansor import (
-    tip_secimi, sefer_suresi, tasiyabilirlik,
+    tip_secimi,
+    sefer_suresi,
+    tasiyabilirlik,
 )
 
 

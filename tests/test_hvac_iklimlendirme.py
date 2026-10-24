@@ -11,15 +11,17 @@ class TestIklimlendirme(unittest.TestCase):
 
     def test_fancoil(self):
         self.assertAlmostEqual(
-            C.fancoil_secimi(3000.0, [2000.0, 3500.0, 5000.0]), 3500.0)
+            C.fancoil_secimi(3000.0, [2000.0, 3500.0, 5000.0]), 3500.0
+        )
 
     def test_fancoil_yetersiz(self):
         with self.assertRaises(ValueError):
             C.fancoil_secimi(9000.0, [2000.0])
 
     def test_santral_debi(self):
-        self.assertAlmostEqual(C.santral_debi(10.0, 8.0),
-                               10.0 / (1.2 * 1.005 / 3600.0 * 8.0))
+        self.assertAlmostEqual(
+            C.santral_debi(10.0, 8.0), 10.0 / (1.2 * 1.005 / 3600.0 * 8.0)
+        )
 
     def test_vrf(self):
         self.assertAlmostEqual(C.vrf_dagilimi([10.0, 12.0], 0.9), 19.8)
@@ -45,8 +47,7 @@ class TestIklimlendirme(unittest.TestCase):
     def test_kanal(self):
         alan, cap = C.kanal_kesiti(3600.0, 5.0)
         self.assertAlmostEqual(alan, 0.2)
-        self.assertAlmostEqual(cap, (4.0 * 0.2 / 3.14159265) ** 0.5 * 1000.0,
-                               places=1)
+        self.assertAlmostEqual(cap, (4.0 * 0.2 / 3.14159265) ** 0.5 * 1000.0, places=1)
 
     def test_menfez(self):
         self.assertEqual(C.menfez_adet(1000.0, 300.0), 4)

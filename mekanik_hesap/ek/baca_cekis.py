@@ -13,9 +13,12 @@ _R_HAVA = 287.0  # J/(kg.K)
 _G = 9.81
 
 
-def cekis(h_m: Union[int, float], t_baca_c: Union[int, float],
-          t_dis_c: Union[int, float],
-          p_pa: float = 101325.0) -> float:
+def cekis(
+    h_m: Union[int, float],
+    t_baca_c: Union[int, float],
+    t_dis_c: Union[int, float],
+    p_pa: float = 101325.0,
+) -> float:
     """Baca cekisi, Pa. Tbaca > Tdis olmalidir."""
     h = float(h_m)
     tb = float(t_baca_c) + 273.15
@@ -28,17 +31,23 @@ def cekis(h_m: Union[int, float], t_baca_c: Union[int, float],
     return p / _R_HAVA * (1.0 / td - 1.0 / tb) * _G * h
 
 
-def yogusma_kontrol(t_baca_c: Union[int, float],
-                    yakit: str = "dogalgaz"
-                    ) -> tuple[bool, str]:
+def yogusma_kontrol(
+    t_baca_c: Union[int, float], yakit: str = "dogalgaz"
+) -> tuple[bool, str]:
     """Yogusma riski -> (risk: bool, aciklama).
 
     Asit cig noktasi esikleri pratik [STANDART-TEYIT: TS 13384, TS 7363]:
     dogalgaz ~55 C, siviyakit ~130 C.
     """
     t = float(t_baca_c)
-    esik = {"dogalgaz": 55.0, "lpg": 55.0, "motorin": 130.0,
-            "fueloil": 140.0, "komur": 120.0, "pelet": 60.0}
+    esik = {
+        "dogalgaz": 55.0,
+        "lpg": 55.0,
+        "motorin": 130.0,
+        "fueloil": 140.0,
+        "komur": 120.0,
+        "pelet": 60.0,
+    }
     if str(yakit) not in esik:
         raise ValueError("bilinmeyen yakit: %r" % (yakit,))
     if t >= esik[str(yakit)]:
@@ -46,8 +55,7 @@ def yogusma_kontrol(t_baca_c: Union[int, float],
     return True, "baca gazi esik altinda: yogusmali baca gerekir"
 
 
-def baca_capi(debi_m3h: Union[int, float],
-              hiz_ms: float = 4.0) -> float:
+def baca_capi(debi_m3h: Union[int, float], hiz_ms: float = 4.0) -> float:
     """Baca ic capi, mm; bir ust 10 mm'ye yuvarlanir.
 
     Hiz kabulu pratik [STANDART-TEYIT: TS 13384, TS 7363]; TS 13384 basin kaybi

@@ -7,11 +7,9 @@ sartnamesi ile netlestirilir.
 """
 
 
-def havuz_hacim(uzunluk_m: float, genislik_m: float,
-                derinlik_m: float) -> float:
+def havuz_hacim(uzunluk_m: float, genislik_m: float, derinlik_m: float) -> float:
     """Havuz su hacmi, m3. V = L*B*h_ort."""
-    l_m, b_m, h_m = (float(uzunluk_m), float(genislik_m),
-                     float(derinlik_m))
+    l_m, b_m, h_m = (float(uzunluk_m), float(genislik_m), float(derinlik_m))
     if l_m <= 0 or b_m <= 0 or h_m <= 0:
         raise ValueError("olculer pozitif olmali")
     return l_m * b_m * h_m
@@ -26,8 +24,9 @@ def devir_debisi(hacim_m3: float, devir_saat: float = 6.0) -> float:
     return v_m3 / t_h
 
 
-def filtre_pompa(debir_m3h: float,
-                  filtrasyon_hizi: float = 30.0) -> tuple[float, float]:
+def filtre_pompa(
+    debir_m3h: float, filtrasyon_hizi: float = 30.0
+) -> tuple[float, float]:
     """Filtre alani (m2) ve pompa debisi (m3/h) onerisi.
 
     A = Q/v_f. Filtrasyon hizi kum filtre pratigi
@@ -39,8 +38,7 @@ def filtre_pompa(debir_m3h: float,
     return q_m3h, q_m3h / vf
 
 
-def havuz_isitma(hacim_m3: float, dt_k: float,
-                 isitma_saati: float = 24.0) -> float:
+def havuz_isitma(hacim_m3: float, dt_k: float, isitma_saati: float = 24.0) -> float:
     """Havuz suyu ilk isitma yuku, kW. Q = V*1.161*dT/t."""
     v_m3, dt, t_h = float(hacim_m3), float(dt_k), float(isitma_saati)
     if v_m3 <= 0 or dt <= 0 or t_h <= 0:
@@ -48,8 +46,9 @@ def havuz_isitma(hacim_m3: float, dt_k: float,
     return v_m3 * 1.161 * dt / t_h
 
 
-def kapali_havuz_havalandirma(havuz_alani_m2: float,
-                              q_birim_m3h_m2: float = 10.0) -> float:
+def kapali_havuz_havalandirma(
+    havuz_alani_m2: float, q_birim_m3h_m2: float = 10.0
+) -> float:
     """Kapali havuz havalandirma/nem alma debisi, m3/h.
 
     Pratik birim debi ile on secim [STANDART-TEYIT: DIN 19643, TS 11899]; nem yuku
