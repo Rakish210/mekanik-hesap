@@ -5,6 +5,7 @@ oktaiv bant verisi esastir. NC hedefleri pratik [STANDART-TEYIT].
 """
 
 import math
+from typing import Union
 
 # Mahal turu -> hedef NC [STANDART-TEYIT]
 NC_HEDEF = {
@@ -14,7 +15,8 @@ NC_HEDEF = {
 }
 
 
-def fan_guc_duzeyi(debi_m3h, basinc_pa):
+def fan_guc_duzeyi(debi_m3h: Union[int, float],
+                   basinc_pa: Union[int, float]) -> float:
     """Fan ses guc duzeyi kestirimi, dBA.
 
     LwA = 10*log10(Q) + 20*log10(P) - 8 (Q: m3/h, P: Pa).
@@ -26,7 +28,7 @@ def fan_guc_duzeyi(debi_m3h, basinc_pa):
     return 10.0 * math.log10(q) + 20.0 * math.log10(p) - 8.0
 
 
-def kanal_degerlendirme(hiz_ms):
+def kanal_degerlendirme(hiz_ms: Union[int, float]) -> tuple[str, str]:
     """Kanal hizina gore gurultu degerlendirmesi [STANDART-TEYIT].
 
     -> (durum, aciklama). Sinir: 3 m/s sessiz, 5 m/s kabul.
@@ -41,7 +43,8 @@ def kanal_degerlendirme(hiz_ms):
     return "gurultulu", "yuksek hiz: kesit buyut veya susturucu"
 
 
-def nc_karsilastir(olculen_dba, mahal="ofis"):
+def nc_karsilastir(olculen_dba: Union[int, float],
+                   mahal: str = "ofis") -> tuple[int, bool, str]:
     """Olculen dBA'yi mahal NC hedefine karsilastir.
 
     Yaklasik cevrim NC ~ dBA - 7 [STANDART-TEYIT].
