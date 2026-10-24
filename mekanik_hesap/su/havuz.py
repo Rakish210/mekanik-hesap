@@ -7,7 +7,8 @@ sartnamesi ile netlestirilir.
 """
 
 
-def havuz_hacim(uzunluk_m, genislik_m, derinlik_m):
+def havuz_hacim(uzunluk_m: float, genislik_m: float,
+                derinlik_m: float) -> float:
     """Havuz su hacmi, m3. V = L*B*h_ort."""
     l_m, b_m, h_m = (float(uzunluk_m), float(genislik_m),
                      float(derinlik_m))
@@ -16,7 +17,7 @@ def havuz_hacim(uzunluk_m, genislik_m, derinlik_m):
     return l_m * b_m * h_m
 
 
-def devir_debisi(hacim_m3, devir_saat=6.0):
+def devir_debisi(hacim_m3: float, devir_saat: float = 6.0) -> float:
     """Havuz devir debisi, m3/h. Q = V/T. Devir suresi tip
     secimidir [STANDART-TEYIT] (ozel/kamu havuzu farkli)."""
     v_m3, t_h = float(hacim_m3), float(devir_saat)
@@ -25,7 +26,8 @@ def devir_debisi(hacim_m3, devir_saat=6.0):
     return v_m3 / t_h
 
 
-def filtre_pompa(debir_m3h, filtrasyon_hizi=30.0):
+def filtre_pompa(debir_m3h: float,
+                  filtrasyon_hizi: float = 30.0) -> tuple[float, float]:
     """Filtre alani (m2) ve pompa debisi (m3/h) onerisi.
 
     A = Q/v_f. Filtrasyon hizi kum filtre pratigi
@@ -37,7 +39,8 @@ def filtre_pompa(debir_m3h, filtrasyon_hizi=30.0):
     return q_m3h, q_m3h / vf
 
 
-def havuz_isitma(hacim_m3, dt_k, isitma_saati=24.0):
+def havuz_isitma(hacim_m3: float, dt_k: float,
+                 isitma_saati: float = 24.0) -> float:
     """Havuz suyu ilk isitma yuku, kW. Q = V*1.161*dT/t."""
     v_m3, dt, t_h = float(hacim_m3), float(dt_k), float(isitma_saati)
     if v_m3 <= 0 or dt <= 0 or t_h <= 0:
@@ -45,7 +48,8 @@ def havuz_isitma(hacim_m3, dt_k, isitma_saati=24.0):
     return v_m3 * 1.161 * dt / t_h
 
 
-def kapali_havuz_havalandirma(havuz_alani_m2, q_birim_m3h_m2=10.0):
+def kapali_havuz_havalandirma(havuz_alani_m2: float,
+                              q_birim_m3h_m2: float = 10.0) -> float:
     """Kapali havuz havalandirma/nem alma debisi, m3/h.
 
     Pratik birim debi ile on secim [STANDART-TEYIT]; nem yuku
