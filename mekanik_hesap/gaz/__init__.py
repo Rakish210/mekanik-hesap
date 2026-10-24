@@ -9,10 +9,13 @@ formulleri kaynak modulden alinmistir.
 """
 
 import math
+from typing import Union
 
 from mekanik_hesap import colebrook
 
-def ttt_toplam(kalemler):
+
+def ttt_toplam(kalemler: list[tuple[Union[int, float], Union[int, float]]]
+               ) -> tuple[float, list[float]]:
     """kalemler: [(birim_tuketim, adet), ...] -> (toplam, detay_list)"""
     detay = []
     toplam = 0.0
@@ -23,7 +26,8 @@ def ttt_toplam(kalemler):
     return toplam, detay
 
 
-def hbk_hiz(Q, P, Dmm):
+def hbk_hiz(Q: Union[int, float], P: Union[int, float],
+            Dmm: Union[int, float]) -> float:
     """Hat ici gaz hizi, m/s."""
     Q = float(Q); P = float(P); Dmm = float(Dmm)
     if P <= 0 or Dmm <= 0:
@@ -31,12 +35,14 @@ def hbk_hiz(Q, P, Dmm):
     return 378.0 * Q / (P * Dmm * Dmm)
 
 
-def isil_genlesme(Lo, a, dT):
+def isil_genlesme(Lo: Union[int, float], a: Union[int, float],
+                  dT: Union[int, float]) -> float:
     """Isil uzama, metre."""
     return float(Lo) * float(a) * float(dT)
 
 
-def konsol_pmax(A_cm2, D_cm, L_m, EF):
+def konsol_pmax(A_cm2: Union[int, float], D_cm: Union[int, float],
+                L_m: Union[int, float], EF: Union[int, float]) -> float:
     """Konsol tasiyici yuk, kg."""
     A_cm2 = float(A_cm2); D_cm = float(D_cm); L_m = float(L_m); EF = float(EF)
     if L_m <= 0 or EF <= 0:
@@ -44,7 +50,7 @@ def konsol_pmax(A_cm2, D_cm, L_m, EF):
     return 885.0 * A_cm2 * D_cm / (L_m * EF)
 
 
-def konsol_guvenli_mi(F, Pmax):
+def konsol_guvenli_mi(F: Union[int, float], Pmax: Union[int, float]) -> bool:
     """Tasiyici yuk guvenlik kontrolu."""
     return float(Pmax) > float(F)
 
@@ -62,7 +68,7 @@ _GAZ_BAGIL = 0.6
 _G = 9.81
 
 
-def gaz_yogunlugu(basinc_mbar):
+def gaz_yogunlugu(basinc_mbar: Union[int, float]) -> float:
     """Isletme basincinda gaz yogunlugu, kg/m3 (izotermal ideal gaz)."""
     p = float(basinc_mbar)
     if p <= 0:
@@ -70,8 +76,12 @@ def gaz_yogunlugu(basinc_mbar):
     return _RHO_HAVA * _GAZ_BAGIL * (1013.25 + p) / 1013.25
 
 
-def basinc_kaybi(uzunluk_m, debi_m3h, cap_mm, basinc_mbar,
-                 puruzluluk_mm=0.05, zeta=2.0):
+def basinc_kaybi(uzunluk_m: Union[int, float],
+                 debi_m3h: Union[int, float],
+                 cap_mm: Union[int, float],
+                 basinc_mbar: Union[int, float],
+                 puruzluluk_mm: Union[int, float] = 0.05,
+                 zeta: Union[int, float] = 2.0) -> float:
     """Boru basin kaybi, mbar. Darcy-Weisbach + colebrook surtunmesi.
 
     Kademe (21/50/300 mbar) yogunluk uzerinden dikkate alinir.
@@ -96,7 +106,9 @@ def basinc_kaybi(uzunluk_m, debi_m3h, cap_mm, basinc_mbar,
     return dp_pa / 100.0
 
 
-def boru_capi(debi_m3h, basinc_mbar, hiz_sinir_ms=6.0):
+def boru_capi(debi_m3h: Union[int, float],
+              basinc_mbar: Union[int, float],
+              hiz_sinir_ms: float = 6.0) -> float:
     """HBK boru capi, mm; bir ust standart capa yuvarlanir.
 
     V = 378*Q/(P*D2) bagintisindan hiz sinirini saglayan cap.
@@ -121,7 +133,7 @@ _SAYAC = (("G4", 6.0), ("G6", 10.0), ("G10", 16.0), ("G16", 25.0),
           ("G100", 160.0))
 
 
-def sayac_secimi(debi_m3h):
+def sayac_secimi(debi_m3h: Union[int, float]) -> str:
     """Sayac sinifi secimi. Debiyi karsilayan ilk G sinifi doner."""
     q = float(debi_m3h)
     if q <= 0:
@@ -132,7 +144,8 @@ def sayac_secimi(debi_m3h):
     raise ValueError("debi sayac araligini asiyor")
 
 
-def havalandirma_menfezi(guc_kw, katsayi_cm2_kw=3.0):
+def havalandirma_menfezi(guc_kw: Union[int, float],
+                         katsayi_cm2_kw: float = 3.0) -> float:
     """Havalandirma menfez alani, cm2. A = P*k.
 
     Katsayi TS 7363 esasli pratik kabul [STANDART-TEYIT]; alt/ust
@@ -144,7 +157,8 @@ def havalandirma_menfezi(guc_kw, katsayi_cm2_kw=3.0):
     return p * k
 
 
-def baca_kesiti(guc_kw, katsayi_cm2_kw=0.5):
+def baca_kesiti(guc_kw: Union[int, float],
+                katsayi_cm2_kw: float = 0.5) -> float:
     """Baca kesit alani, cm2. A = P*k (TS 13384 esasli pratik).
 
     Katsayi ve cekis sarti proje/baca raporuna gore teyit edilir
@@ -156,7 +170,7 @@ def baca_kesiti(guc_kw, katsayi_cm2_kw=0.5):
     return p * k
 
 
-def alarm_zonu(cihaz_adet, zon_kapasite=4):
+def alarm_zonu(cihaz_adet: int, zon_kapasite: int = 4) -> int:
     """Gaz alarm/selenoid vana zon sayisi. Pratik zon kapasitesi
     [STANDART-TEYIT]; yerlesim ve vana tipi projeye aittir."""
     adet = int(cihaz_adet)
